@@ -1,0 +1,35 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="EnigmaLiteTests/FrequencyTests.cs">
+    <Files>
+      <File FileName="EnigmaLiteTests/FrequencyTests.cs" Line="150" Column="24" />
+      <File FileName="EnigmaLite/TextAnalysis.cs" Line="84" Column="32" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="EnigmaLite" expanded="True">
+            <Node name="References" expanded="True" />
+          </Node>
+          <Node name="EnigmaLiteTests" expanded="True">
+            <Node name="References" expanded="True" />
+            <Node name="FrequencyTests.cs" selected="True" />
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+      <Pad Id="MonoDevelop.NUnit.TestPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
