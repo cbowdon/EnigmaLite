@@ -1,19 +1,19 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="EnigmaLite\TextAnalysis.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="EnigmaLiteTests\FrequencyTests.cs">
     <Files>
-      <File FileName="EnigmaLiteTests\FrequencyTests.cs" Line="149" Column="4" />
-      <File FileName="EnigmaLite\TextAnalysis.cs" Line="86" Column="29" />
+      <File FileName="EnigmaLiteTests\FrequencyTests.cs" Line="1" Column="4" />
+      <File FileName="EnigmaLite\TextAnalysis.cs" Line="97" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="EnigmaLite" expanded="True">
             <Node name="References" expanded="True" />
-            <Node name="TextAnalysis.cs" selected="True" />
           </Node>
           <Node name="EnigmaLiteTests" expanded="True">
             <Node name="References" expanded="True" />
+            <Node name="FrequencyTests.cs" selected="True" />
           </Node>
         </State>
       </Pad>
@@ -24,7 +24,15 @@
         <State />
       </Pad>
       <Pad Id="MonoDevelop.NUnit.TestPad">
-        <State expanded="True" selected="True" />
+        <State expanded="True">
+          <Node name="EnigmaLiteTests" expanded="True">
+            <Node name="EnigmaLiteTests" expanded="True">
+              <Node name="FrequencyTests" expanded="True">
+                <Node name="GenghisKhan" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
