@@ -55,6 +55,19 @@ namespace EnigmaLite
 			return sorted.ToList ();
 		}
 		
+		public static Dictionary<string,double> ToDict (this IEnumerable<KeyValuePair<string,double>> input)
+		{
+			var dict = new Dictionary<string,double>(input.Count());
+			foreach(var i in input) {
+				try {
+					dict.Add(i.Key, i.Value);
+				} catch {
+					// do nothing	
+				}				 
+			}
+			return dict;
+		}
+		
 		public static Dictionary<char, char> SubsDict (List<KeyValuePair<char,double>> cyph, List<KeyValuePair<char,double>> real)
 		{
 			var l1 = real.Count;
@@ -86,7 +99,7 @@ namespace EnigmaLite
 			}
 			return sum;
 		}
-		
+				
 		public static string SubChars (this string str, Dictionary<char,char> dict)
 		{
             var allChars = str.ToCharArray();

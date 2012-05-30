@@ -200,6 +200,12 @@ namespace EnigmaLiteTests
             }
 			
 			// diff "Decrypted DNA" against the original story, expect no differences
+			
+			// score should be 1.0
+			var deci = File.ReadAllText(decryptedStory).SplitByWords();
+			var real = words.RankFrequency().ToDict();
+			var score = TextAnalysis.ScoreSubd(deci, real); 
+			Assert.AreEqual(1.0, score, 1e-5);
 		}		
 	}
 }
