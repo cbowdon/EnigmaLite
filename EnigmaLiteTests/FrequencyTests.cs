@@ -167,14 +167,30 @@ namespace EnigmaLiteTests
 			
 			var freqs = chars.RankFrequency ();
 			
+            // create basic substition cipher
 			var cipher = new Dictionary<char, char> ();
 			for (int i = 0; i < 255; i++) {
 				cipher.Add ((char)i, (char)(i + 1));
 			}
-			cipher.Add ((char)255, (char)0);
+			cipher.Add ((char)255, (char)0); 
 			
 			var crypted = text.SubChars(cipher);
-			
+            var encryptedStory = "Encrypted DNA.txt";
+            using (TextWriter tw = new StreamWriter(encryptedStory, false))
+            {
+                tw.Write(crypted);
+            }
+
+            var cText = File.ReadAllText(encryptedStory);
+            // ciphered text frequencies
+            var ctf = cText.SplitByChars().RankFrequency(); 
+
+            var subsDict = TextAnalysis.SubsDict(ctf, freqs);
+            for (int i = 0; i < 255; i++)
+            {
+                Console.WriteLine("{0}\t{1}", i, subsDict[(char)i]);
+                Assert.AreEqual(subsDict[(char)i], (char)(i + 1));
+            }
 		}
 		
 	}

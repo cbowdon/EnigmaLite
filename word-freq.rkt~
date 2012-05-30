@@ -1,3 +1,0 @@
-#lang racket
-
-(define text "Hello my name is John, I'm the batman in my spare time and I like to eat cabbage. The best thing about cabbage is the crunchiness.")
