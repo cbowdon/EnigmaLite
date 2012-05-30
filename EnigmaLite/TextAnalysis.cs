@@ -69,6 +69,12 @@ namespace EnigmaLite
 			return dict;
 		}
 		
+        /// <summary>
+        /// Fraction of words in the decipher-attempt that are real words
+        /// </summary>
+        /// <param name="deciphered">List of words in deciphered text</param>
+        /// <param name="real">Dictionary of real words and their frequencies</param>
+        /// <returns>Score between 0.0 and 1.0</returns>
 		public static double ScoreSubd (List<string> deciphered, Dictionary<string,double> real)
 		{
 			var len = deciphered.Count;
@@ -83,8 +89,22 @@ namespace EnigmaLite
 		
 		public static string SubChars (this string str, Dictionary<char,char> dict)
 		{
-			throw new NotImplementedException ();
-		}
+            var allChars = str.ToCharArray();
+            var len = allChars.Length;
+            var newChars = new char[len];
+            for (int i = 0; i < len; i++) 
+            {
+                try
+                {
+                    newChars[i] = dict[allChars[i]];
+                }
+                catch
+                {
+                    newChars[i] = '*';
+                }
+            }			
+            return new String(newChars);
+ 		}
 	}
 }
 

@@ -184,15 +184,23 @@ namespace EnigmaLiteTests
             var cText = File.ReadAllText(encryptedStory);
             // ciphered text frequencies
             var ctf = cText.SplitByChars().RankFrequency(); 
-
+			
             var subsDict = TextAnalysis.SubsDict(ctf, freqs);
-            for (int i = 0; i < 255; i++)
-            {
-                Console.WriteLine("{0}\t{1}", i, subsDict[(char)i]);
-                Assert.AreEqual(subsDict[(char)i], (char)(i + 1));
-            }
-		}
 		
+			// subsDict should be inverse of cipher
+			foreach (var kv in subsDict) {
+				Assert.AreEqual(kv.Key, cipher[kv.Value]);
+			} 			
+			
+			var decrypted = crypted.SubChars(subsDict);
+            var decryptedStory = "Decrypted DNA.txt";
+            using (TextWriter tw = new StreamWriter(decryptedStory, false))
+            {
+                tw.Write(decrypted);
+            }
+			
+			// diff "Decrypted DNA" against the original story, expect no differences
+		}		
 	}
 }
 
