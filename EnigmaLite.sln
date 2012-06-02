@@ -1,24 +1,55 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+# Visual C# Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnigmaLite", "EnigmaLite\EnigmaLite.csproj", "{F10BAAB3-C05F-4700-8A13-289DFAF231C4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnigmaLiteTests", "EnigmaLiteTests\EnigmaLiteTests.csproj", "{BC5F59CD-A157-4574-A1D6-2452F36BBE8A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnigmaLiteWPF", "EnigmaLiteWPF\EnigmaLiteWPF.csproj", "{B9B46D09-D237-4FC6-8D96-B26642ED426F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BC5F59CD-A157-4574-A1D6-2452F36BBE8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BC5F59CD-A157-4574-A1D6-2452F36BBE8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BC5F59CD-A157-4574-A1D6-2452F36BBE8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BC5F59CD-A157-4574-A1D6-2452F36BBE8A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F10BAAB3-C05F-4700-8A13-289DFAF231C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F10BAAB3-C05F-4700-8A13-289DFAF231C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F10BAAB3-C05F-4700-8A13-289DFAF231C4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F10BAAB3-C05F-4700-8A13-289DFAF231C4}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F10BAAB3-C05F-4700-8A13-289DFAF231C4}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{F10BAAB3-C05F-4700-8A13-289DFAF231C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F10BAAB3-C05F-4700-8A13-289DFAF231C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F10BAAB3-C05F-4700-8A13-289DFAF231C4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F10BAAB3-C05F-4700-8A13-289DFAF231C4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F10BAAB3-C05F-4700-8A13-289DFAF231C4}.Release|x86.ActiveCfg = Release|Any CPU
+		{BC5F59CD-A157-4574-A1D6-2452F36BBE8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC5F59CD-A157-4574-A1D6-2452F36BBE8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC5F59CD-A157-4574-A1D6-2452F36BBE8A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{BC5F59CD-A157-4574-A1D6-2452F36BBE8A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{BC5F59CD-A157-4574-A1D6-2452F36BBE8A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BC5F59CD-A157-4574-A1D6-2452F36BBE8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC5F59CD-A157-4574-A1D6-2452F36BBE8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC5F59CD-A157-4574-A1D6-2452F36BBE8A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{BC5F59CD-A157-4574-A1D6-2452F36BBE8A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{BC5F59CD-A157-4574-A1D6-2452F36BBE8A}.Release|x86.ActiveCfg = Release|Any CPU
+		{B9B46D09-D237-4FC6-8D96-B26642ED426F}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{B9B46D09-D237-4FC6-8D96-B26642ED426F}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{B9B46D09-D237-4FC6-8D96-B26642ED426F}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{B9B46D09-D237-4FC6-8D96-B26642ED426F}.Debug|x86.ActiveCfg = Debug|x86
+		{B9B46D09-D237-4FC6-8D96-B26642ED426F}.Debug|x86.Build.0 = Debug|x86
+		{B9B46D09-D237-4FC6-8D96-B26642ED426F}.Release|Any CPU.ActiveCfg = Release|x86
+		{B9B46D09-D237-4FC6-8D96-B26642ED426F}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{B9B46D09-D237-4FC6-8D96-B26642ED426F}.Release|Mixed Platforms.Build.0 = Release|x86
+		{B9B46D09-D237-4FC6-8D96-B26642ED426F}.Release|x86.ActiveCfg = Release|x86
+		{B9B46D09-D237-4FC6-8D96-B26642ED426F}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = EnigmaLite\EnigmaLite.csproj

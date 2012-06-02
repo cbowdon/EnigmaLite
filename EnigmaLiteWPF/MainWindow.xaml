@@ -1,0 +1,56 @@
+﻿<Window x:Class="EnigmaLiteWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:EnigmaLiteWPF.ViewModels"
+        xmlns:v="clr-namespace:EnigmaLiteWPF.Views"
+        Width="800"
+        Height="600"
+        MinWidth="400"
+        MinHeight="300"
+        ResizeMode="CanResize"
+        Title="MainWindow">
+    <Window.DataContext>
+        <vm:TextAnalysisViewModel/>
+    </Window.DataContext>
+        
+    <Grid Background="DimGray">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>   
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>            
+        </Grid.ColumnDefinitions>
+        
+        <Label Grid.Row="0" 
+               Grid.Column="0"
+               Grid.ColumnSpan="1">
+            Enigma Lite 
+        </Label>
+        <Label Grid.Row="0" 
+               Grid.Column="1"
+               Grid.ColumnSpan="1" Content="{Binding StatusMessage}"/>
+        
+        <v:DecipheredText 
+            Margin="4,4,2,2"
+            Padding="0"
+            Grid.Row="1" 
+            Grid.Column="0"/>
+        
+        <v:DecipheredText
+            Margin="2,4,4,2"
+            Padding="0"
+            Grid.Row="1" 
+            Grid.Column="1"/>
+        
+        <v:KeyEditor 
+            Margin="4,2,4,4"
+            Padding="0"
+            Grid.Row="2" 
+            Grid.Column="0" 
+            Grid.ColumnSpan="2"/>        
+    </Grid>
+</Window>
