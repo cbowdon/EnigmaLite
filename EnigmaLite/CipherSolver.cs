@@ -7,11 +7,7 @@ namespace EnigmaLite
 {
 	public class CipherSolver
 	{
-		#region Protected properties
-		protected string realWordsFile { get; set; }
-
-		protected string realCharsFile { get; set; }
-
+		#region Protected properties		
 		protected Dictionary<string,double> realWordFreqs { get; set; }
 
 		protected List<KeyValuePair<char,double>> realCharFreqs { get; set; }
@@ -22,34 +18,71 @@ namespace EnigmaLite
 
 		public string Solution { get; protected set; }
 
-		// the only publicly set property
+        public double SolutionScore { get; protected set; }
+
+        // the only publicly set property
 		public CipherDictionary Cipher { get; set; }
-		
-		public double SolutionScore { get; protected set; }
-		#endregion
+
+        protected string _realWordsFile = "words.bin";
+        public string RealWordsFile
+        {
+            get
+            {
+                return _realWordsFile;
+            }
+            set
+            {
+                if (_realWordsFile != value)
+                {
+                    _realWordsFile = value;
+                    DeserializeRealWords ();
+                    SolutionScore = TextAnalysis.ScoreSubd(Solution.SplitByWords(), realWordFreqs);
+                }
+            }
+        }
+
+        protected string _realCharsFile = "chars.bin";
+        public string RealCharsFile
+        {
+            get
+            {
+                return _realCharsFile;
+            }
+            set
+            {
+                if (_realCharsFile != value)
+                {
+                    _realCharsFile = value;
+                    DeserializeRealChars();
+                    Solve ();
+                }
+            }
+        }
+        #endregion
 		
 		#region Constructor
 		public CipherSolver (string encryptedText)
 		{
 			Problem = encryptedText;			
-			realWordsFile = "words.bin";
-			realCharsFile = "chars.bin";
-			DeserializeRealFreqs ();
+			DeserializeRealWords ();
+            DeserializeRealChars ();
 			Solve ();
 			Cipher.ItemChanged += delegate(object sender, EventArgs e) { SubAndScore(); };			
 		}
 		#endregion
 		
 		#region Protected methods
-		protected void DeserializeRealFreqs ()
+		protected void DeserializeRealWords ()
 		{
-			using (Stream stream = File.Open(realWordsFile, FileMode.Open)) {
+			using (Stream stream = File.Open(RealWordsFile, FileMode.Open)) {
 				BinaryFormatter bin = new BinaryFormatter ();
 				var deserializedWords = (List<KeyValuePair<string,double>>)bin.Deserialize (stream);
 				realWordFreqs = deserializedWords.ToDict ();
 			}
-			
-			using (Stream stream = File.Open(realCharsFile, FileMode.Open)) {
+        }
+        protected void DeserializeRealChars ()
+        {
+			using (Stream stream = File.Open(RealCharsFile, FileMode.Open)) {
 				BinaryFormatter bin = new BinaryFormatter ();
 				realCharFreqs = (List<KeyValuePair<char,double>>)bin.Deserialize (stream);				
 			}

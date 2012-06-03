@@ -10,12 +10,12 @@ using EnigmaLite;
 
 namespace EnigmaLiteWPF.ViewModels
 {
-    class CipherCollection : ObservableCollectionPlus<CipherPair>
+    class CipherSolverViewModel : ObservableCollectionPlus<CipherPair>
     {
         public string InputText { get; set; }
         public string OutputText { get; set; }
 
-        public CipherCollection(Dictionary<char, char> originalKey, string cipheredText)
+        public CipherSolverViewModel(Dictionary<char, char> originalKey, string cipheredText)
         {
             InputText = cipheredText;
             LoadFromDict(originalKey);
@@ -46,7 +46,7 @@ namespace EnigmaLiteWPF.ViewModels
             if (existing.ToList().Count > 0)
             {
                 foreach (var i in existing) {
-                    i.CipherValue = (char)0;
+                    i.CipherValue = '*';
                 }
             }            
         }

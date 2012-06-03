@@ -10,7 +10,7 @@
         ResizeMode="CanResize"
         Title="MainWindow">
     <Window.DataContext>
-        <vm:TextAnalysisViewModel/>
+        <vm:EnigmaLiteViewModel/>
     </Window.DataContext>
         
     <Grid Background="DimGray">

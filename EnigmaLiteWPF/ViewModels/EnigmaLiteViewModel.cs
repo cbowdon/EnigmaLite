@@ -8,47 +8,50 @@ using EnigmaLite;
 
 namespace EnigmaLiteWPF.ViewModels
 {
-    class TextAnalysisViewModel : ObservableObject
+    class EnigmaLiteViewModel : ObservableObject
     {
-        #region Properties
-        protected string filename = "";
-        public string Filename
-        {
-            get
-            {
-                return filename;
-            }
-            set
-            {
-                if (filename != value)
-                {
-                    filename = value;
-                    RaisePropertyChanged("Filename");
-                }
-            }
-        }
-
-        protected string inputText = "Input the ciphered text here.";
+        #region Properties     
+        protected string _inputText = "Input the ciphered text here.";
         public string InputText
         {
             get
             {
-                return inputText;
+                return _inputText;
             }
             set
             {
-                if (inputText != value)
+                if (_inputText != value)
                 {
-                    inputText = value;
+                    _inputText = value;
                     StatusMessage = "TEXT CHANGED!";
+                    cipherSolver = new CipherSolver(_inputText);
                     RaisePropertyChanged("InputText");
                 }
             }
         }
 
+        protected string _outputText = "";
+        public string OutputText
+        {
+            get 
+            { 
+                return _outputText; 
+            }
+            set
+            {
+                if (_outputText != value)
+                {
+                    _outputText = value;
+                    RaisePropertyChanged("OutputText");
+                }
+            }
+        }
+
+        protected CipherSolver cipherSolver { get; set; }
+
         protected Dictionary<char, char> XCipher;
-        public CipherCollection Cipher { get; set; }
- 
+        public CipherSolverViewModel Cipher { get; set; }
+
         protected string statusMessage = "";
         public string StatusMessage {
             get
@@ -67,20 +70,12 @@ namespace EnigmaLiteWPF.ViewModels
         #endregion
 
         #region Constructor
-        public TextAnalysisViewModel()
+        public EnigmaLiteViewModel()
         {
             // N.B. "TargetInvocationException" may refer to a NullReferenceException
             // i.e. don't forget to instantiate stuff
-
-            // this is just temporary dummy data
-            XCipher = new Dictionary<char, char>();
-            XCipher.Add('a', 'i');
-            XCipher.Add('c', 'k');
-            XCipher.Add('d', 'l');
-            XCipher.Add('e', 'm');
-            XCipher.Add('b', 'j');            
-
-            Cipher = new CipherCollection(XCipher, "GshdAsasghbcage");            
+            cipherSolver = new CipherSolver(InputText);
+            Cipher = new CipherSolverViewModel(cipherSolver.Cipher, InputText);            
         }
         #endregion
 
