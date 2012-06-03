@@ -68,19 +68,19 @@ namespace EnigmaLite
 			return dict;
 		}
 		
-		public static Dictionary<char, char> SubsDict (List<KeyValuePair<char,double>> cyph, List<KeyValuePair<char,double>> real)
+		public static CipherDictionary SubsDict (List<KeyValuePair<char,double>> cyph, List<KeyValuePair<char,double>> real)
 		{
 			var l1 = real.Count;
 			var l2 = cyph.Count;
 			
-			var dict = new Dictionary<char,char> ();
+			var dict = new CipherDictionary ();
 			
 			for (int i = 0; i < Math.Min(l1,l2); i++) {
 				dict.Add (cyph [i].Key, real [i].Key);
 			}
 			
 			return dict;
-		}
+		}				
 		
         /// <summary>
         /// Fraction of words in the decipher-attempt that are real words

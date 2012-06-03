@@ -8,15 +8,15 @@ namespace EnigmaLiteTests
 {
 	public class CipherTests
 	{
-		protected string shortStory = "DNA - Private Life Of Genghis Khan.txt";		
+		protected string shortStory = "DNA - Private Life Of Genghis Khan.txt";
 		protected string cleanText;
 		protected Dictionary<char,char> cipher;
 		protected string crypted;
 		
-		public CipherTests()
+		public CipherTests ()
 		{
 			// load some text
-            cleanText = File.ReadAllText (shortStory);			
+			cleanText = File.ReadAllText (shortStory);			
 			
 			// create basic substition cipher			
 			cipher = new Dictionary<char, char> ();
@@ -25,25 +25,24 @@ namespace EnigmaLiteTests
 			}
 			cipher.Add ((char)255, (char)0); 
 			
-			crypted = cleanText.SubChars(cipher);			
+			crypted = cleanText.SubChars (cipher);			
 		}
 		
-		
 		[Test]
-		public void CipherSolver ()
+		public void Solver ()
 		{
 			// instantiating class should give first solution
-			CipherSolver solver = new CipherSolver(crypted);			
-			Assert.AreEqual(cleanText, solver.Solution);
-			Assert.AreEqual(1.0, solver.SolutionScore, 1e-5);
+			CipherSolver solver = new CipherSolver (crypted);			
+			Assert.AreEqual (cleanText, solver.Solution, "exact same text");
+			Assert.AreEqual (1.0, solver.SolutionScore, 1e-5, "perfect score");
 			// should be able to mess with it
-			solver.Cipher['e'] = '!';
-			Assert.AreNotEqual(cleanText, solver.Solution);
-			Assert.Less(1.0, solver.SolutionScore);
+			solver.Cipher ['e'] = '!';
+			Assert.AreNotEqual (cleanText, solver.Solution, "different text");
+			Assert.Less (solver.SolutionScore, 1.0, "bad score");
 			// and fix it
-			solver.Cipher['e'] = 'f';
-			Assert.AreEqual(cleanText, solver.Solution);
-			Assert.AreEqual(1.0, solver.SolutionScore, 1e-5);
+			solver.Cipher ['e'] = 'd';
+			Assert.AreEqual (cleanText, solver.Solution, "exact same text again");
+			Assert.AreEqual (1.0, solver.SolutionScore, 1e-5, "perfect score again");
 		}
 	}
 }

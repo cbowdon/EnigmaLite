@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace EnigmaLiteTests
 {
 	[TestFixture()]
-	public class UtilityTests
+	public class AuxiliaryTests
 	{
 		protected string shortStory = "DNA - Private Life Of Genghis Khan.txt";
 		protected string wordText = "Hello my name is John, I'm the batman in my spare time and I like to eat cabbage. The best thing about cabbage is the crunchiness.".ToLower ();
