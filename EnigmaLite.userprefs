@@ -1,9 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="EnigmaLiteTests\FrequencyTests.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="EnigmaLiteTests/CipherTests.cs">
     <Files>
-      <File FileName="EnigmaLiteTests\FrequencyTests.cs" Line="1" Column="4" />
-      <File FileName="EnigmaLite\TextAnalysis.cs" Line="97" Column="1" />
+      <File FileName="EnigmaLiteTests/UtilityTests.cs" Line="163" Column="45" />
+      <File FileName="EnigmaLiteTests/CipherTests.cs" Line="38" Column="53" />
+      <File FileName="EnigmaLite/CipherSolver.cs" Line="16" Column="4" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -13,7 +14,7 @@
           </Node>
           <Node name="EnigmaLiteTests" expanded="True">
             <Node name="References" expanded="True" />
-            <Node name="FrequencyTests.cs" selected="True" />
+            <Node name="CipherTests.cs" selected="True" />
           </Node>
         </State>
       </Pad>
@@ -24,15 +25,7 @@
         <State />
       </Pad>
       <Pad Id="MonoDevelop.NUnit.TestPad">
-        <State expanded="True">
-          <Node name="EnigmaLiteTests" expanded="True">
-            <Node name="EnigmaLiteTests" expanded="True">
-              <Node name="FrequencyTests" expanded="True">
-                <Node name="GenghisKhan" selected="True" />
-              </Node>
-            </Node>
-          </Node>
-        </State>
+        <State expanded="True" selected="True" />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>

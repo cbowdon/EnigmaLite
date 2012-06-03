@@ -35,6 +35,7 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="SimpsonsEnglish.cs" />
     <Compile Include="TextAnalysis.cs" />
+    <Compile Include="CipherSolver.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
