@@ -103,8 +103,16 @@ namespace EnigmaLite
 				Solution.SplitByWords (),
 				realWordFreqs
 			);
+            if (SolutionUpdated != null)
+            {
+                SolutionUpdated.Invoke(this, new EventArgs());
+            }
 		}
 		#endregion
-	}
+
+        #region Events
+        public event EventHandler SolutionUpdated;
+        #endregion
+    }
 }
 

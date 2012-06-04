@@ -10,15 +10,14 @@ using EnigmaLite;
 
 namespace EnigmaLiteWPF.ViewModels
 {
-    class CipherSolverViewModel : ObservableCollectionPlus<CipherPair>
+    class CipherDictionaryViewModel : ObservableCollectionPlus<CipherPair>, INotifyPropertyChanged
     {
-        public string InputText { get; set; }
-        public string OutputText { get; set; }
+        protected CipherDictionary cipherDictionary;
 
-        public CipherSolverViewModel(Dictionary<char, char> originalKey, string cipheredText)
+        public CipherDictionaryViewModel(CipherDictionary cd)
         {
-            InputText = cipheredText;
-            LoadFromDict(originalKey);
+            cipherDictionary = cd;
+            LoadFromDict(cipherDictionary);            
         }
 
         /// <summary>
@@ -35,7 +34,6 @@ namespace EnigmaLiteWPF.ViewModels
             {
                 Add(new CipherPair(kv.Key, kv.Value));
             }
-            OutputText = TextAnalysis.SubChars(InputText, dict);
         }        
 
         protected override void ContainedElementChanged(object sender, PropertyChangedEventArgs e)
@@ -47,9 +45,10 @@ namespace EnigmaLiteWPF.ViewModels
             {
                 foreach (var i in existing) {
                     i.CipherValue = '*';
+                    cipherDictionary[i.CipherKey] = '*';
                 }
-            }            
-        }
-
+            }
+            cipherDictionary[s.CipherKey] = s.CipherValue;            
+        }      
     }
 }

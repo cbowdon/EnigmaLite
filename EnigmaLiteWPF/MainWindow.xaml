@@ -8,7 +8,7 @@
         MinWidth="400"
         MinHeight="300"
         ResizeMode="CanResize"
-        Title="MainWindow">
+        Title="EnigmaLite">
     <Window.DataContext>
         <vm:EnigmaLiteViewModel/>
     </Window.DataContext>
@@ -27,14 +27,16 @@
         
         <Label Grid.Row="0" 
                Grid.Column="0"
-               Grid.ColumnSpan="1">
+               Grid.ColumnSpan="1"
+               FontWeight="Bold"
+               FontSize="24">
             Enigma Lite 
         </Label>
         <Label Grid.Row="0" 
                Grid.Column="1"
                Grid.ColumnSpan="1" Content="{Binding StatusMessage}"/>
         
-        <v:DecipheredText 
+        <v:CipheredText 
             Margin="4,4,2,2"
             Padding="0"
             Grid.Row="1" 

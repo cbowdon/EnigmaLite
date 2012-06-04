@@ -63,6 +63,9 @@
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\ObservableObject.cs" />
     <Compile Include="ViewModels\EnigmaLiteViewModel.cs" />
+    <Compile Include="Views\CipheredText.xaml.cs">
+      <DependentUpon>CipheredText.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DecipherButton.xaml.cs">
       <DependentUpon>DecipherButton.xaml</DependentUpon>
     </Compile>
@@ -84,6 +87,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\CipheredText.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DecipherButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
