@@ -8,12 +8,13 @@
     <Grid>
         <TextBox
             Name="CipheredTextBox"
-            MinWidth="200"
-            MinHeight="200"
-            TextWrapping="Wrap"
-            VerticalScrollBarVisibility="Auto"
-            HorizontalScrollBarVisibility="Auto"            
-            Text="{Binding ProblemText}" 
-            />
+            Style="{StaticResource textFieldStyle}"
+            Text="{Binding ProblemText}">
+            <TextBox.ToolTip>
+                <StackPanel>
+                    <TextBlock>Paste the encrypted text into this box and click "Decipher".</TextBlock>
+                </StackPanel>
+            </TextBox.ToolTip>
+        </TextBox>
     </Grid>
 </UserControl>

@@ -6,7 +6,8 @@
              xmlns:vm="clr-namespace:EnigmaLiteWPF.ViewModels"
              xmlns:v="clr-namespace:EnigmaLiteWPF.Views"        
              mc:Ignorable="d" 
-             d:DesignHeight="80" d:DesignWidth="300">    
+             MinHeight="100"
+             d:DesignHeight="100" d:DesignWidth="300">    
 
     <Grid>        
         <Grid.RowDefinitions>
@@ -22,36 +23,13 @@
             <DataTemplate x:Key="KeyTemplate">
                 <StackPanel>
                     <Label Content="{Binding Path=CipherKey}"
-                           FontFamily="Consolas"
-                           FontWeight="DemiBold"
-                           FontSize="14"/>
+                           IsTabStop="False"
+                           Style="{StaticResource keyLabelStyle}"/>
                     <TextBox Text="{Binding Path=CipherValue}"
-                             FontFamily="Consolas"
-                             FontSize="14"/>
+                             v:SelectableTextBox.AutoSelectAll="True"
+                             Style="{StaticResource keyTextBoxStyle}"/>                                            
                 </StackPanel>
-            </DataTemplate>
-
-            <Style TargetType="{x:Type ListBox}">
-                <Setter Property="BorderBrush" Value="Red"/>
-                <Setter Property="BorderThickness" Value="1"/>
-                <Setter Property="Background" Value="Beige" />
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="BorderBrush" Value="Black" />
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-
-            <Style TargetType="{x:Type Label}">
-                <Style.Triggers>
-                    <Trigger Property="IsFocused" Value="True">
-                        <Setter Property="Background" Value="Green" />
-                    </Trigger>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Opacity" Value="0.5"/>                        
-                    </Trigger>
-                </Style.Triggers>
-            </Style>                          
+            </DataTemplate>             
         </Grid.Resources>        
         
         
@@ -68,14 +46,20 @@
         <ListBox Grid.Row="1" 
                  Grid.Column="0"
                  Grid.ColumnSpan="2"
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 Style="{StaticResource listBoxStyle}"
                  ItemsSource="{Binding CDVM}"
-                 ItemTemplate="{StaticResource KeyTemplate}">            
+                 ItemContainerStyle="{StaticResource itemContainerStyle}"
+                 ItemTemplate="{StaticResource KeyTemplate}">                        
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel IsItemsHost="True" />
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
+            <ListBox.ToolTip>
+                <StackPanel>
+                    <TextBlock>Click a letter to edit the solution.</TextBlock>
+                </StackPanel>
+            </ListBox.ToolTip>
         </ListBox>
     </Grid>
 </UserControl>

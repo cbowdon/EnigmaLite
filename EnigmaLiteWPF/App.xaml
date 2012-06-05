@@ -3,6 +3,42 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
+        <Style x:Key="textFieldStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="MinHeight" Value="100" />
+            <Setter Property="MinWidth" Value="100" />
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="Background" Value="Beige" />
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>            
+        </Style>
+
+        <Style x:Key="itemContainerStyle"  TargetType="{x:Type ListBoxItem}">
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="Focusable" Value="False"/>            
+        </Style>
+
+        <Style x:Key="listBoxStyle" TargetType="{x:Type ListBox}">
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="KeyboardNavigation.TabNavigation" Value="Cycle" />
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="Beige" />                        
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>                        
+        </Style>
+
+        <Style x:Key="keyLabelStyle" TargetType="{x:Type Label}">
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="FontSize" Value="14"/>            
+        </Style>
+        
+        <Style x:Key="keyTextBoxStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="FontSize" Value="14"/>            
+        </Style>
+
     </Application.Resources>
 </Application>

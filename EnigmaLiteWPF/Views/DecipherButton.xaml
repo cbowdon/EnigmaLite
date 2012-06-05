@@ -11,7 +11,12 @@
                 Content="Decipher this text"
                 Width="150"
                 Height="30"
-                Command="{Binding DecipherText}"
-                />
+                Command="{Binding DecipherText}">
+            <Button.ToolTip>
+                <StackPanel>
+                    <TextBlock>Click to try and decipher the text.</TextBlock>
+                </StackPanel>
+            </Button.ToolTip>
+        </Button>
     </Grid>
 </UserControl>

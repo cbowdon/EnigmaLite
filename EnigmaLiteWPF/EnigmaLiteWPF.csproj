@@ -75,6 +75,7 @@
     <Compile Include="Views\KeyEditor.xaml.cs">
       <DependentUpon>KeyEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SelectableTextBox.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

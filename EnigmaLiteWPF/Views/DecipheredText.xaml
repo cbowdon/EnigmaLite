@@ -8,14 +8,10 @@
     <Grid>
         <TextBox
             Name="DecipheredTextBox"
-            MinWidth="200"
-            MinHeight="200"
-            TextWrapping="Wrap"
-            Background="White"            
+            Style="{StaticResource textFieldStyle}"
             IsReadOnly="True"
-            VerticalScrollBarVisibility="Auto"
-            HorizontalScrollBarVisibility="Auto"
-            Text="{Binding SolutionText}" 
-            />
+            Text="{Binding SolutionText}" >           
+        </TextBox>            
+            
     </Grid>
 </UserControl>
