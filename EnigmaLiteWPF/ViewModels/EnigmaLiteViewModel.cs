@@ -27,7 +27,8 @@ namespace EnigmaLiteWPF.ViewModels
                 if (_problemText != value)
                 {
                     _problemText = value;                    
-                    RaisePropertyChanged("ProblemText");                    
+                    RaisePropertyChanged("ProblemText");
+                    StatusMessage = "Text changed.";
                 }
             }
         }
@@ -55,8 +56,8 @@ namespace EnigmaLiteWPF.ViewModels
 
         public CipherDictionaryViewModel CDVM { get; set; }
 
-        protected string _score;
-        public string Score
+        protected double _score;
+        public double Score
         {
             get
             {
@@ -71,7 +72,7 @@ namespace EnigmaLiteWPF.ViewModels
                 }
             }
         }
-
+   
         protected string statusMessage = "";
         public string StatusMessage {
             get
@@ -96,7 +97,6 @@ namespace EnigmaLiteWPF.ViewModels
             // i.e. don't forget to instantiate stuff
             SetNewProblem(ProblemText);
             
-            //CDVM = new CipherDictionaryViewModel(cipherSolver.Cipher);
             // Set commands
             DecipherText = new RelayCommand<object>(x => SetNewProblem(ProblemText));
         }
@@ -127,15 +127,9 @@ namespace EnigmaLiteWPF.ViewModels
         void OnSolutionUpdated(object sender, EventArgs e)
         {
             SolutionText = cipherSolver.Solution;
-            Score = ScoreToString(cipherSolver.SolutionScore);
-            StatusMessage = string.Format("Deciphered - solution score: {0}", Score);
-        }
-
-        // simpler than a value converter, to be honest
-        string ScoreToString(double score)
-        {
-            return string.Format("{0:0.00}", score);
-        }
+            Score = cipherSolver.SolutionScore;
+            StatusMessage = "Text deciphered.";
+        }        
         #endregion
     }
 }

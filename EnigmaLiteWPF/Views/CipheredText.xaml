@@ -12,7 +12,7 @@
             Text="{Binding ProblemText}">
             <TextBox.ToolTip>
                 <StackPanel>
-                    <TextBlock>Paste the encrypted text into this box and click "Decipher".</TextBlock>
+                    <TextBlock>Paste the encrypted text into this box and click the decipher button.</TextBlock>
                 </StackPanel>
             </TextBox.ToolTip>
         </TextBox>

@@ -5,61 +5,65 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:EnigmaLiteWPF.ViewModels"
              xmlns:v="clr-namespace:EnigmaLiteWPF.Views"        
+             xmlns:vc="clr-namespace:EnigmaLiteWPF.ValueConverters"        
              mc:Ignorable="d" 
              MinHeight="100"
-             d:DesignHeight="100" d:DesignWidth="300">    
+             d:DesignHeight="100" d:DesignWidth="300">
 
-    <Grid>        
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+    <Border Style="{StaticResource editorStyle}">
+        <Grid>        
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
 
-        <Grid.Resources>  
-            <DataTemplate x:Key="KeyTemplate">
-                <StackPanel>
-                    <Label Content="{Binding Path=CipherKey}"
-                           IsTabStop="False"
-                           Style="{StaticResource keyLabelStyle}"/>
-                    <TextBox Text="{Binding Path=CipherValue}"
-                             v:SelectableTextBox.AutoSelectAll="True"
-                             Style="{StaticResource keyTextBoxStyle}"/>                                            
-                </StackPanel>
-            </DataTemplate>             
-        </Grid.Resources>        
+            <Grid.Resources>  
+                <DataTemplate x:Key="KeyTemplate">
+                    <StackPanel>
+                        <Label Content="{Binding Path=CipherKey}"
+                               IsTabStop="False"
+                               Style="{StaticResource keyLabelStyle}"/>
+                        <TextBox Text="{Binding Path=CipherValue}"
+                                 v:SelectableTextBox.AutoSelectAll="True"
+                                 Style="{StaticResource keyTextBoxStyle}"/>                                            
+                    </StackPanel>
+                </DataTemplate>
+                <vc:ScoreConverter x:Key="scoreConverter"/>
+            </Grid.Resources>                
         
+            <Label Grid.Row="0" 
+                   Grid.Column="0"
+                   FontWeight="Bold">
+                Cipher Key:
+            </Label>
         
-        <Label Grid.Row="0" 
-               Grid.Column="0"
-               FontWeight="Bold">
-            Cipher Key:
-        </Label>
+            <Label Grid.Row="0"
+                   Grid.Column="1"
+                   HorizontalAlignment="Right"
+                   Content="{Binding Score, Converter={StaticResource scoreConverter}}"/>
         
-        <Label Grid.Row="0"
-               Grid.Column="1"
-               Content="{Binding StatusMessage}"/>
-        
-        <ListBox Grid.Row="1" 
-                 Grid.Column="0"
-                 Grid.ColumnSpan="2"
-                 Style="{StaticResource listBoxStyle}"
-                 ItemsSource="{Binding CDVM}"
-                 ItemContainerStyle="{StaticResource itemContainerStyle}"
-                 ItemTemplate="{StaticResource KeyTemplate}">                        
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel IsItemsHost="True" />
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-            <ListBox.ToolTip>
-                <StackPanel>
-                    <TextBlock>Click a letter to edit the solution.</TextBlock>
-                </StackPanel>
-            </ListBox.ToolTip>
-        </ListBox>
-    </Grid>
+            <ListBox Grid.Row="1" 
+                     Grid.Column="0"
+                     Grid.ColumnSpan="2"
+                     Style="{StaticResource listBoxStyle}"
+                     ItemsSource="{Binding CDVM}"
+                     ItemContainerStyle="{StaticResource itemContainerStyle}"
+                     ItemTemplate="{StaticResource KeyTemplate}">                        
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel IsItemsHost="True" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ToolTip>
+                    <StackPanel>
+                        <TextBlock>Click a letter to edit the solution.</TextBlock>
+                    </StackPanel>
+                </ListBox.ToolTip>
+            </ListBox>
+        </Grid>
+    </Border>
 </UserControl>

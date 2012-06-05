@@ -11,7 +11,9 @@
             <Setter Property="Background" Value="Beige" />
             <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
             <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
-            <Setter Property="TextWrapping" Value="Wrap"/>            
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="1"/>            
         </Style>
 
         <Style x:Key="itemContainerStyle"  TargetType="{x:Type ListBoxItem}">
@@ -19,13 +21,20 @@
             <Setter Property="Focusable" Value="False"/>            
         </Style>
 
-        <Style x:Key="listBoxStyle" TargetType="{x:Type ListBox}">
-            <Setter Property="IsTabStop" Value="False"/>
-            <Setter Property="KeyboardNavigation.TabNavigation" Value="Cycle" />
+        <Style x:Key="editorStyle" TargetType="{x:Type Border}">
+            <Setter Property="Background" Value="BlanchedAlmond"/>                        
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="5"/>
+        </Style>
+        
+        <Style x:Key="listBoxStyle" TargetType="{x:Type ListBox}">
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="KeyboardNavigation.TabNavigation" Value="Continue" />
+            <Setter Property="BorderBrush" Value="Silver"/>
+            <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Background" Value="Beige" />                        
-            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>                        
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>            
         </Style>
 
         <Style x:Key="keyLabelStyle" TargetType="{x:Type Label}">
