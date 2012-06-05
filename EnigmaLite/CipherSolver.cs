@@ -54,7 +54,7 @@ namespace EnigmaLite
                 {
                     _realCharsFile = value;
                     DeserializeRealChars();
-                    Solve ();
+                    Solve (Problem);
                 }
             }
         }
@@ -63,11 +63,9 @@ namespace EnigmaLite
 		#region Constructor
 		public CipherSolver (string encryptedText)
 		{
-			Problem = encryptedText;			
 			DeserializeRealWords ();
             DeserializeRealChars ();
-			Solve ();
-			Cipher.ItemChanged += delegate(object sender, EventArgs e) { SubAndScore(); };			
+			Solve (encryptedText);			
 		}
 		#endregion
 		
@@ -87,15 +85,7 @@ namespace EnigmaLite
 				realCharFreqs = (List<KeyValuePair<char,double>>)bin.Deserialize (stream);				
 			}
 		}
-		
-		protected void Solve ()
-		{
-			var chars = Problem.SplitByChars ();
-			var freqs = chars.RankFrequency ();
-			Cipher = (CipherDictionary)TextAnalysis.SubsDict (freqs, realCharFreqs);
-			SubAndScore ();
-		}
-		
+				
 		protected void SubAndScore ()
 		{
 			Solution = Problem.SubChars (Cipher);
@@ -109,6 +99,18 @@ namespace EnigmaLite
             }
 		}
 		#endregion
+
+        #region Public methods
+        public void Solve(string problem)
+        {
+            Problem = problem;
+            var chars = Problem.SplitByChars();
+            var freqs = chars.RankFrequency();
+            Cipher = (CipherDictionary)TextAnalysis.SubsDict(freqs, realCharFreqs);
+            SubAndScore();
+            Cipher.ItemChanged += delegate(object sender, EventArgs e) { SubAndScore(); };			            
+        }		
+        #endregion
 
         #region Events
         public event EventHandler SolutionUpdated;

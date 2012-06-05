@@ -5,8 +5,8 @@
         xmlns:v="clr-namespace:EnigmaLiteWPF.Views"
         Width="800"
         Height="600"
-        MinWidth="400"
-        MinHeight="300"
+        MinWidth="500"
+        MinHeight="500"
         ResizeMode="CanResize"
         Title="EnigmaLite">
     <Window.DataContext>

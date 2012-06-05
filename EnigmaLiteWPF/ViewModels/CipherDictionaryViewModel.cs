@@ -48,7 +48,7 @@ namespace EnigmaLiteWPF.ViewModels
                     cipherDictionary[i.CipherKey] = '*';
                 }
             }
-            cipherDictionary[s.CipherKey] = s.CipherValue;            
+            cipherDictionary[s.CipherKey] = s.CipherValue;                        
         }      
     }
 }

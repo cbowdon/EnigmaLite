@@ -44,6 +44,35 @@ namespace EnigmaLiteTests
 			Assert.AreEqual (cleanText, solver.Solution, "exact same text again");
 			Assert.AreEqual (1.0, solver.SolutionScore, 1e-5, "perfect score again");
 		}
+		
+		[Test]
+		public void ReSolve ()
+		{
+			int eventFired = 0;
+
+			CipherSolver solver = new CipherSolver (crypted);			
+			solver.SolutionUpdated += delegate(object sender, EventArgs e) {
+				eventFired++;	
+			};
+			
+			Assert.AreEqual (cleanText, solver.Solution, "exact same text");
+			Assert.AreEqual (1.0, solver.SolutionScore, 1e-5, "perfect score");
+			
+			var before = solver.Cipher;
+			
+			Assert.AreEqual (0, eventFired);
+			
+			// sovle a new problem
+			solver.Solve (cleanText);			
+			Assert.AreEqual (1, eventFired);
+			Assert.AreNotEqual (before, solver.Cipher);			
+			var sol = solver.Solution;
+			
+			// should be able to mess with it
+			solver.Cipher ['e'] = '!';
+			Assert.AreNotEqual (sol, solver.Solution, "different solution");			
+			Assert.AreEqual(2, eventFired);
+		}
 	}
 }
 

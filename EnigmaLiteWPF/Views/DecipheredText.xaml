@@ -8,11 +8,13 @@
     <Grid>
         <TextBox
             Name="DecipheredTextBox"
-            MinWidth="375"
-            MinHeight="500"
+            MinWidth="200"
+            MinHeight="200"
             TextWrapping="Wrap"
             Background="White"            
             IsReadOnly="True"
+            VerticalScrollBarVisibility="Auto"
+            HorizontalScrollBarVisibility="Auto"
             Text="{Binding SolutionText}" 
             />
     </Grid>

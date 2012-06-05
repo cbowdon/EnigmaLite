@@ -26,8 +26,7 @@ namespace EnigmaLiteWPF.ViewModels
             {
                 if (_problemText != value)
                 {
-                    _problemText = value;
-                    //SetNewProblem(ProblemText);
+                    _problemText = value;                    
                     RaisePropertyChanged("ProblemText");                    
                 }
             }
@@ -96,7 +95,9 @@ namespace EnigmaLiteWPF.ViewModels
             // N.B. "TargetInvocationException" may refer to a NullReferenceException
             // i.e. don't forget to instantiate stuff
             SetNewProblem(ProblemText);
-            CDVM = new CipherDictionaryViewModel(cipherSolver.Cipher);
+            
+            //CDVM = new CipherDictionaryViewModel(cipherSolver.Cipher);
+            // Set commands
             DecipherText = new RelayCommand<object>(x => SetNewProblem(ProblemText));
         }
         #endregion
@@ -108,8 +109,15 @@ namespace EnigmaLiteWPF.ViewModels
         #region Private methods
         void SetNewProblem(string newProblemText)
         {
-            StatusMessage = "Deciphering...";                    
-            cipherSolver = new CipherSolver(newProblemText);            
+            StatusMessage = "Deciphering...";
+            if (cipherSolver == null)
+            {
+                cipherSolver = new CipherSolver(newProblemText);
+            }
+            else
+            {
+                cipherSolver.Solve(newProblemText);
+            }
             OnSolutionUpdated(this, new EventArgs());            
             cipherSolver.SolutionUpdated += new EventHandler(OnSolutionUpdated);
             CDVM = new CipherDictionaryViewModel(cipherSolver.Cipher);

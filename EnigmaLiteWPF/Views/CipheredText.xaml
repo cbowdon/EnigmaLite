@@ -8,9 +8,11 @@
     <Grid>
         <TextBox
             Name="CipheredTextBox"
-            MinWidth="375"
-            MinHeight="500"
+            MinWidth="200"
+            MinHeight="200"
             TextWrapping="Wrap"
+            VerticalScrollBarVisibility="Auto"
+            HorizontalScrollBarVisibility="Auto"            
             Text="{Binding ProblemText}" 
             />
     </Grid>
