@@ -21,18 +21,21 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Grid.Resources>  
+            <Grid.Resources>
+
+                <vc:ScoreConverter x:Key="scoreConverter"/>
+                <vc:CharConverter x:Key="charConverter"/>
+                
                 <DataTemplate x:Key="KeyTemplate">
-                    <StackPanel>
-                        <Label Content="{Binding Path=CipherKey}"
-                               IsTabStop="False"
+                    <StackPanel VerticalAlignment="Top">
+                        <Label Content="{Binding Path=CipherKey, Converter={StaticResource charConverter}}"                               
                                Style="{StaticResource keyLabelStyle}"/>
-                        <TextBox Text="{Binding Path=CipherValue}"
+                        <TextBox Text="{Binding Path=CipherValue, Converter={StaticResource charConverter}}"
                                  v:SelectableTextBox.AutoSelectAll="True"
                                  Style="{StaticResource keyTextBoxStyle}"/>                                            
                     </StackPanel>
                 </DataTemplate>
-                <vc:ScoreConverter x:Key="scoreConverter"/>
+                
             </Grid.Resources>                
         
             <Label Grid.Row="0" 
@@ -49,7 +52,7 @@
             <ListBox Grid.Row="1" 
                      Grid.Column="0"
                      Grid.ColumnSpan="2"
-                     Style="{StaticResource listBoxStyle}"
+                     Style="{StaticResource listBoxStyle}"                     
                      ItemsSource="{Binding CDVM}"
                      ItemContainerStyle="{StaticResource itemContainerStyle}"
                      ItemTemplate="{StaticResource KeyTemplate}">                        
@@ -60,7 +63,16 @@
                 </ListBox.ItemsPanel>
                 <ListBox.ToolTip>
                     <StackPanel>
-                        <TextBlock>Click a letter to edit the solution.</TextBlock>
+                        <TextBlock Background="CornflowerBlue" 
+                                   Foreground="White"
+                                   Margin="2"
+                                   Padding="2">
+                            Click a letter to edit the solution.
+                        </TextBlock>
+                        <TextBlock Margin="2"
+                                   Padding="2">
+                            You can also enter the hex values for ASCII chars like '0xA'.
+                        </TextBlock>
                     </StackPanel>
                 </ListBox.ToolTip>
             </ListBox>
