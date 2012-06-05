@@ -14,18 +14,23 @@ namespace SerializeFrequencies
         static void Main(string[] args)
         {
             Console.WriteLine("Serializing...");
-            SerializeWordsAndChars ();
-            Console.WriteLine("Serialized!");
+			string inputFile;
+			if (args.Length > 0) {
+				inputFile = args[0];
+			} else {
+				inputFile = "DNA - Private Life Of Genghis Khan.txt";
+			}
+            SerializeWordsAndChars (inputFile);
+            Console.WriteLine("Serialized!");			
         }        
 		
-		static void SerializeWordsAndChars ()
+		static void SerializeWordsAndChars (string inputFile)
 		{
-            string shortStory, cleanText;
+            string cleanText;
             List<KeyValuePair<char, double>> charFreqs;
             List<KeyValuePair<string, double>> wordFreqs;
-
-            shortStory = "DNA - Private Life Of Genghis Khan.txt";
-            cleanText = File.ReadAllText(shortStory);
+          
+            cleanText = File.ReadAllText(inputFile);
 
             wordFreqs = cleanText.SplitByWords().RankFrequency();
             charFreqs = cleanText.SplitByChars().RankFrequency();            

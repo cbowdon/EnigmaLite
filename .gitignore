@@ -1,4 +1,4 @@
-﻿
+
 #################
 ## Eclipse
 #################
@@ -169,3 +169,11 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
+
+EnigmaLite.userprefs
+
+EnigmaLiteTests/test-results/EnigmaLiteTests.csproj.test-cache
+
+fsharptest.exe
+
+fsharptest.fs
