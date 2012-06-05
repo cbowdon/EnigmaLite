@@ -7,13 +7,13 @@
         Height="600"
         MinWidth="500"
         MinHeight="500"
-        ResizeMode="CanResize"
+        ResizeMode="CanResize"        
         Title="EnigmaLite">
     <Window.DataContext>
         <vm:EnigmaLiteViewModel/>
     </Window.DataContext>
         
-    <Grid Background="DimGray">
+    <Grid Style="{StaticResource plainGrid}">
         
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
@@ -52,7 +52,7 @@
             Grid.Row="1" 
             Grid.Column="1"/>
         
-        <v:DecipherButton
+        <v:DecipherButton            
             Grid.Row="2"
             Grid.Column="0"            
             Margin="4"/>

@@ -11,6 +11,7 @@
                 Content="Decipher this text"
                 Width="150"
                 Height="30"
+                Style="{StaticResource decipherButtonStyle}"
                 Command="{Binding DecipherText}">           
         </Button>
     </Grid>

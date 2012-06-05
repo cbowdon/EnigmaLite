@@ -4,16 +4,32 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
 
+        <Style x:Key="gradientGrid" TargetType="{x:Type Grid}">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush>
+                        <GradientStop Color="Goldenrod" Offset="0.0" />
+                        <GradientStop Color="SkyBlue" Offset="0.5" />
+                        <GradientStop Color="DarkOliveGreen" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>                
+        </Style>
+
+        <Style x:Key="plainGrid" TargetType="{x:Type Grid}">
+            <Setter Property="Background" Value="White"/>
+        </Style>
+        
         <Style x:Key="textFieldStyle" TargetType="{x:Type TextBox}">
             <Setter Property="MinHeight" Value="100" />
             <Setter Property="MinWidth" Value="100" />
             <Setter Property="Padding" Value="5" />
-            <Setter Property="Background" Value="Beige" />
+            <Setter Property="Background" Value="LightBlue" />
             <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
             <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
             <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="BorderThickness" Value="1"/>            
+            <Setter Property="BorderThickness" Value="0"/>            
         </Style>
 
         <Style x:Key="itemContainerStyle"  TargetType="{x:Type ListBoxItem}">
@@ -22,18 +38,18 @@
         </Style>
 
         <Style x:Key="editorStyle" TargetType="{x:Type Border}">
-            <Setter Property="Background" Value="BlanchedAlmond"/>                        
+            <Setter Property="Background" Value="LightBlue"/>                        
             <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="CornerRadius" Value="0"/>
         </Style>
         
         <Style x:Key="listBoxStyle" TargetType="{x:Type ListBox}">
             <Setter Property="IsTabStop" Value="False"/>
             <Setter Property="KeyboardNavigation.TabNavigation" Value="Continue" />
             <Setter Property="BorderBrush" Value="Silver"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Background" Value="Beige" />                        
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="White" />                        
             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>            
             <Setter Property="VerticalAlignment" Value="Top"/>
         </Style>
@@ -49,7 +65,41 @@
         <Style x:Key="keyTextBoxStyle" TargetType="{x:Type TextBox}">
             <Setter Property="FontFamily" Value="Consolas"/>
             <Setter Property="FontWeight" Value="Normal"/>
-            <Setter Property="FontSize" Value="14"/>            
+            <Setter Property="FontSize" Value="14"/>                  
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="Silver"/>
+        </Style>
+        
+        <Style x:Key="decipherButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="LightBlue"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderBrush" Value="Silver"/>
+            <Setter Property="Margin" Value="0"/>                                    
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Name="buttonBorder"
+                                CornerRadius="0"
+                                BorderThickness="1"
+                                BorderBrush="Silver"
+                                Background="LightBlue">
+                            <ContentPresenter x:Name="buttonContentPresenter"
+                                VerticalAlignment="Center"  
+                                HorizontalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="buttonBorder" Property="Background" Value="SkyBlue"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="buttonBorder" Property="Background" Value="CornflowerBlue"/>
+                            </Trigger>                            
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
     </Application.Resources>
