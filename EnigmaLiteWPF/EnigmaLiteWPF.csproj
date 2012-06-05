@@ -58,7 +58,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModels\CipherPair.cs" />
-    <Compile Include="ViewModels\CipherSolverViewModel.cs" />
+    <Compile Include="ViewModels\CipherDictionaryViewModel.cs" />
     <Compile Include="ViewModels\ObservableCollectionPlus.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\ObservableObject.cs" />

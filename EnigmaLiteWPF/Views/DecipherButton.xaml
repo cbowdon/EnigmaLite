@@ -8,9 +8,10 @@
 
     <Grid>
         <Button Name="Decipher" 
-                Content="Decipher!"
+                Content="Decipher this text"
                 Width="150"
-                Height="50"                
+                Height="30"
+                Command="{Binding DecipherText}"
                 />
     </Grid>
 </UserControl>

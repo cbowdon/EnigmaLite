@@ -6,13 +6,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <TextBlock
+        <TextBox
             Name="DecipheredTextBox"
             MinWidth="375"
             MinHeight="500"
             TextWrapping="Wrap"
-            Background="White"
-            Focusable="True"
+            Background="White"            
+            IsReadOnly="True"
             Text="{Binding SolutionText}" 
             />
     </Grid>

@@ -15,7 +15,7 @@ namespace EnigmaLiteWPF.ViewModels
         #endregion
 
         #region Public properties
-        protected string _problemText = "Input the ciphered text here.";
+        protected string _problemText = "Input the ciphered text on the left.";
         public string ProblemText
         {
             get
@@ -27,8 +27,7 @@ namespace EnigmaLiteWPF.ViewModels
                 if (_problemText != value)
                 {
                     _problemText = value;
-                    StatusMessage = "TEXT CHANGED!";
-                    SetNewProblem(ProblemText);
+                    //SetNewProblem(ProblemText);
                     RaisePropertyChanged("ProblemText");                    
                 }
             }
@@ -97,11 +96,19 @@ namespace EnigmaLiteWPF.ViewModels
             // N.B. "TargetInvocationException" may refer to a NullReferenceException
             // i.e. don't forget to instantiate stuff
             SetNewProblem(ProblemText);
-            CDVM = new CipherDictionaryViewModel(cipherSolver.Cipher);     
+            CDVM = new CipherDictionaryViewModel(cipherSolver.Cipher);
+            DecipherText = new RelayCommand<object>(x => SetNewProblem(ProblemText));
         }
+        #endregion
 
+        #region Commands
+        public RelayCommand<object> DecipherText { get; private set; }
+        #endregion
+
+        #region Private methods
         void SetNewProblem(string newProblemText)
         {
+            StatusMessage = "Deciphering...";                    
             cipherSolver = new CipherSolver(newProblemText);            
             OnSolutionUpdated(this, new EventArgs());            
             cipherSolver.SolutionUpdated += new EventHandler(OnSolutionUpdated);
@@ -113,6 +120,7 @@ namespace EnigmaLiteWPF.ViewModels
         {
             SolutionText = cipherSolver.Solution;
             Score = ScoreToString(cipherSolver.SolutionScore);
+            StatusMessage = string.Format("Deciphered - solution score: {0}", Score);
         }
 
         // simpler than a value converter, to be honest
