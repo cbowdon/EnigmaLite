@@ -11,7 +11,7 @@ namespace EnigmaLiteWPF.ViewModels
     class EnigmaLiteViewModel : ObservableObject
     {
         #region Protected properties
-        protected CipherSolver cipherSolver;
+        protected IDecipherer cipherSolver;
         #endregion
 
         #region Public properties

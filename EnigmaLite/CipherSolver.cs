@@ -5,7 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace EnigmaLite
 {
-	public class CipherSolver
+	public class CipherSolver : IDecipherer
 	{
 		#region Protected properties		
 		protected Dictionary<string,double> realWordFreqs { get; set; }
