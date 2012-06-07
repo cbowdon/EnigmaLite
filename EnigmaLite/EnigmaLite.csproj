@@ -38,6 +38,7 @@
     <Compile Include="TextAnalysis.cs" />
     <Compile Include="CipherSolver.cs" />
     <Compile Include="CipherDictionary.cs" />
+    <Compile Include="Frequencies.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 
 namespace EnigmaLite
@@ -105,8 +106,8 @@ namespace EnigmaLite
         {
             Problem = problem;
             var chars = Problem.SplitByChars();
-            var freqs = chars.RankFrequency();
-            Cipher = (CipherDictionary)TextAnalysis.SubsDict(freqs, realCharFreqs);
+            var freqs = chars.RankFrequency();			
+            Cipher = (CipherDictionary)TextAnalysis.SubsDict(freqs.OrderedSingles, realCharFreqs);
             SubAndScore();
             Cipher.ItemChanged += delegate(object sender, EventArgs e) { SubAndScore(); };			            
         }		

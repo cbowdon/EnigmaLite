@@ -51,7 +51,7 @@ namespace EnigmaLiteTests
 			
 			Assert.AreEqual (3196, File.ReadAllText (shortStory).SplitByWords ().Count);
 			
-			List<KeyValuePair<string,double>> freqs = words.RankFrequency ();
+			var freqs = words.RankFrequency ().OrderedSingles;
 			Assert.AreEqual (realWordFreqs.Count, freqs.Count);			
 			
 			var sorted = (from r in realWordFreqs orderby r.Value descending select r).ToList ();			
@@ -71,9 +71,9 @@ namespace EnigmaLiteTests
 		[Test()]
 		public void CharFreqs ()
 		{
-			List<char> chars = charText.SplitByChars ();
+			var chars = charText.SplitByChars ();
 			Assert.AreEqual (charText.Length, chars.Count);
-			var freqs = chars.RankFrequency ();
+			var freqs = chars.RankFrequency ().OrderedSingles;
 			
 			Assert.AreEqual ('b', freqs [0].Key);
 			Assert.AreEqual (6.0 / 27, freqs [0].Value, 1e-5);
@@ -88,8 +88,8 @@ namespace EnigmaLiteTests
 		[Test()]
 		public void SubsDict ()
 		{
-			var engFreqs = TextAnalysis.RankFrequency (charText);
-			var cypFreqs = TextAnalysis.RankFrequency (cyphered);
+			var engFreqs = TextAnalysis.RankFrequency (charText).OrderedSingles;
+			var cypFreqs = TextAnalysis.RankFrequency (cyphered).OrderedSingles;
 			
 			var ans = new Dictionary<char,char> ();
 			ans.Add ('z', 'a');
@@ -165,48 +165,95 @@ namespace EnigmaLiteTests
 			var chars = text.SplitByChars ();
 			var words = text.SplitByWords ();
 			
-			var freqs = chars.RankFrequency ();
+			var freqs = chars.RankFrequency ().OrderedSingles;
 			
-            // create basic substition cipher
+			// create basic substition cipher
 			var cipher = new Dictionary<char, char> ();
 			for (int i = 0; i < 255; i++) {
 				cipher.Add ((char)i, (char)(i + 1));
 			}
 			cipher.Add ((char)255, (char)0); 
 			
-			var crypted = text.SubChars(cipher);
-            var encryptedStory = "Encrypted DNA.txt";
-            using (TextWriter tw = new StreamWriter(encryptedStory, false))
-            {
-                tw.Write(crypted);
-            }
+			var crypted = text.SubChars (cipher);
+			var encryptedStory = "Encrypted DNA.txt";
+			using (TextWriter tw = new StreamWriter(encryptedStory, false)) {
+				tw.Write (crypted);
+			}
 
-            var cText = File.ReadAllText(encryptedStory);
-            // ciphered text frequencies
-            var ctf = cText.SplitByChars().RankFrequency(); 
+			var cText = File.ReadAllText (encryptedStory);
+			// ciphered text frequencies
+			var ctf = cText.SplitByChars ().RankFrequency ().OrderedSingles; 
 			
-            var subsDict = TextAnalysis.SubsDict(ctf, freqs);
+			var subsDict = TextAnalysis.SubsDict (ctf, freqs);
 		
 			// subsDict should be inverse of cipher
 			foreach (var kv in subsDict) {
-				Assert.AreEqual(kv.Key, cipher[kv.Value]);
+				Assert.AreEqual (kv.Key, cipher [kv.Value]);
 			} 			
 			
-			var decrypted = crypted.SubChars(subsDict);
-            var decryptedStory = "Decrypted DNA.txt";
-            using (TextWriter tw = new StreamWriter(decryptedStory, false))
-            {
-                tw.Write(decrypted);
-            }
+			var decrypted = crypted.SubChars (subsDict);
+			var decryptedStory = "Decrypted DNA.txt";
+			using (TextWriter tw = new StreamWriter(decryptedStory, false)) {
+				tw.Write (decrypted);
+			}
 			
 			// diff "Decrypted DNA" against the original story, expect no differences
 			
 			// score should be 1.0
-			var deci = File.ReadAllText(decryptedStory).SplitByWords();
-			var real = words.RankFrequency().ToDict();
-			var score = TextAnalysis.ScoreSubd(deci, real); 
-			Assert.AreEqual(1.0, score, 1e-5);
-		}		
+			var deci = File.ReadAllText (decryptedStory).SplitByWords ();
+			var real = words.RankFrequency ().Singles;
+			var score = TextAnalysis.ScoreSubd (deci, real); 
+			Assert.AreEqual (1.0, score, 1e-5);
+		}
+		
+		[Test()]
+		public void RankDoublesFrequency ()
+		{			
+			var textToRank = "Hello, my name is Frederick von Wolfenhausen, and I am a vacuum cleaner in the space-time continuum.";
+			
+			var singles = new Dictionary<char,double> ();
+			#region singles actual answer
+			singles.Add (' ', 0.16);
+			singles.Add ('e', 0.11);
+			singles.Add ('n', 0.09);
+			singles.Add ('a', 0.08);
+			singles.Add ('m', 0.06);
+			singles.Add ('i', 0.05);
+			singles.Add ('c', 0.05);
+			singles.Add ('u', 0.05);
+			singles.Add ('l', 0.04);
+			singles.Add ('o', 0.04);
+			singles.Add ('s', 0.03);
+			singles.Add ('r', 0.03);
+			singles.Add ('t', 0.03);
+			singles.Add (',', 0.02);
+			singles.Add ('d', 0.02);
+			singles.Add ('v', 0.02);
+			singles.Add ('h', 0.02);
+			singles.Add ('H', 0.01);
+			singles.Add ('y', 0.01);
+			singles.Add ('F', 0.01);
+			singles.Add ('k', 0.01);
+			singles.Add ('W', 0.01);
+			singles.Add ('f', 0.01);
+			singles.Add ('I', 0.01);
+			singles.Add ('p', 0.01);
+			singles.Add ('-', 0.01);
+			singles.Add ('.', 0.01);
+			#endregion
+			
+			var doubles = new Dictionary<char,double> ();
+			doubles.Add ('u', 2.0 / textToRank.Length);
+			doubles.Add ('l', 1.0 / textToRank.Length);
+			
+			var ans = textToRank.RankFrequency ();
+			
+			Assert.AreEqual (singles.Count, ans.Singles.Count, "Single char frequency counts match");
+			Assert.AreEqual (doubles.Count, ans.Doubles.Count, "Double char frequency counts match");
+			
+			Assert.AreEqual(ans.Doubles['u'], doubles['u']);
+			Assert.AreEqual(ans.Doubles['l'], doubles['l']);
+		}
 	}
 }
 

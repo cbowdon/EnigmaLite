@@ -177,3 +177,9 @@ EnigmaLiteTests/test-results/EnigmaLiteTests.csproj.test-cache
 fsharptest.exe
 
 fsharptest.fs
+
+EnigmaLiteTests/bin/Debug/EnigmaLite.dll.mdb
+
+EnigmaLiteTests/bin/Debug/EnigmaLiteTests.dll.mdb
+
+EnigmaLite/bin/Debug/EnigmaLite.dll.mdb

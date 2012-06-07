@@ -11,16 +11,16 @@ namespace EnigmaLiteTests
 	public class SerializationTests
 	{						
 		string shortStory, cleanText;
-		List<KeyValuePair<char,double>> charFreqs;
-		List<KeyValuePair<string,double>> wordFreqs;
+		IList<KeyValuePair<char,double>> charFreqs;
+		IList<KeyValuePair<string,double>> wordFreqs;
 		
 		public SerializationTests ()
 		{	
 			shortStory = "DNA - Private Life Of Genghis Khan.txt";		
 			cleanText = File.ReadAllText (shortStory);			
 			
-			wordFreqs = cleanText.SplitByWords ().RankFrequency ();
-			charFreqs = cleanText.SplitByChars ().RankFrequency ();			
+			wordFreqs = cleanText.SplitByWords ().RankFrequency ().OrderedSingles;
+			charFreqs = cleanText.SplitByChars ().RankFrequency ().OrderedSingles;			
 			
 			SerializeWordsAndChars ();
 		}
