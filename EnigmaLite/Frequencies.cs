@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace EnigmaLite
 {
-	public class Frequencies<T>
+	[Serializable()]
+	public class Frequencies<T> : ISerializable
 	{
 		public Frequencies (IDictionary<T, double> singles, IDictionary<T, double> doubles)
 		{			
@@ -34,7 +36,21 @@ namespace EnigmaLite
 				}
 				return _orderedDoubles;
 			}	
-		}		
+		}
+		
+		#region ISerializable members
+		public Frequencies (SerializationInfo info, StreamingContext context)
+		{
+			Singles = (IDictionary<T, double>)info.GetValue("Singles", typeof(IDictionary<T, double>));
+			Doubles = (IDictionary<T, double>)info.GetValue("Doubles", typeof(IDictionary<T, double>));
+		}
+		
+		public void GetObjectData(SerializationInfo info, StreamingContext context)
+		{
+			info.AddValue("Singles", Singles);
+			info.AddValue("Doubles", Doubles);			
+		}
+		#endregion
 	}
 }
 
