@@ -71,6 +71,15 @@ namespace EnigmaLite
 			return new Frequencies<T> (singles, doubles);
 		}
 		
+		/// <summary>
+		/// IEnumerable<KeyValuePair> to Dict. 
+		/// </summary>
+		/// <returns>
+		/// The dict.
+		/// </returns>
+		/// <param name='input'>
+		/// Input.
+		/// </param>
 		public static Dictionary<string,double> ToDict (this IEnumerable<KeyValuePair<string,double>> input)
 		{
 			var dict = new Dictionary<string,double> (input.Count ());

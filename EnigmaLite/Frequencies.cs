@@ -14,6 +14,11 @@ namespace EnigmaLite
 			Doubles = doubles;
 		}
 		
+		public override string ToString ()
+		{
+			return string.Format ("[Frequencies: {0} singles, {1} doubles]", Singles.Count, Doubles.Count);
+		}
+		
 		public IDictionary<T, double> Singles { get; protected set; }
 
 		public IDictionary<T, double> Doubles { get; protected set; }
@@ -32,7 +37,7 @@ namespace EnigmaLite
 		public IList<KeyValuePair<T,double>> OrderedDoubles {
 			get {
 				if (_orderedDoubles == null) {
-					_orderedDoubles = (from entry in Singles orderby entry.Value descending select entry).ToList();
+					_orderedDoubles = (from entry in Doubles orderby entry.Value descending select entry).ToList();
 				}
 				return _orderedDoubles;
 			}	

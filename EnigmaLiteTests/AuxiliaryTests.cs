@@ -51,21 +51,25 @@ namespace EnigmaLiteTests
 			
 			Assert.AreEqual (3196, File.ReadAllText (shortStory).SplitByWords ().Count);
 			
-			var freqs = words.RankFrequency ().OrderedSingles;
-			Assert.AreEqual (realWordFreqs.Count, freqs.Count);			
+			var freqs = words.RankFrequency ();
+			Assert.AreEqual (realWordFreqs.Count, freqs.OrderedSingles.Count);			
 			
 			var sorted = (from r in realWordFreqs orderby r.Value descending select r).ToList ();			
 			
-			Assert.AreEqual (sorted [0].Key, freqs [0].Key);			
+			Assert.AreEqual (sorted [0].Key, freqs.OrderedSingles [0].Key);			
 			
 			for (int i = 0; i < sorted.Count; i++) {
 				Assert.AreEqual (
 					sorted [i].Value,
-					freqs [i].Value,
+					freqs.OrderedSingles [i].Value,
 					1e-5,
 					string.Format ("{0}. differing frequency values", i)
 				);
-			}									
+			}
+			
+			// no doubles here (i.e. consecutive repeats, not just repeats)			
+			double theFreq;
+			Assert.IsFalse (freqs.Doubles.TryGetValue ("the", out theFreq));			
 		}
 		
 		[Test()]
@@ -73,16 +77,25 @@ namespace EnigmaLiteTests
 		{
 			var chars = charText.SplitByChars ();
 			Assert.AreEqual (charText.Length, chars.Count);
-			var freqs = chars.RankFrequency ().OrderedSingles;
+			var freqs = chars.RankFrequency ();
 			
-			Assert.AreEqual ('b', freqs [0].Key);
-			Assert.AreEqual (6.0 / 27, freqs [0].Value, 1e-5);
+			Assert.AreEqual ('b', freqs.OrderedSingles [0].Key);
+			Assert.AreEqual (6.0 / 27, freqs.OrderedSingles [0].Value, 1e-5);
 			
-			Assert.AreEqual ('a', freqs [1].Key);
-			Assert.AreEqual (5.0 / 27, freqs [1].Value, 1e-5);
+			Assert.AreEqual ('a', freqs.OrderedSingles [1].Key);
+			Assert.AreEqual (5.0 / 27, freqs.OrderedSingles [1].Value, 1e-5);
 			
-			Assert.AreEqual ('.', freqs [4].Key);
-			Assert.AreEqual (3.0 / 27, freqs [4].Value);									
+			Assert.AreEqual ('.', freqs.OrderedSingles [4].Key);
+			Assert.AreEqual (3.0 / 27, freqs.OrderedSingles [4].Value);									
+			
+			Assert.AreEqual (5, freqs.Doubles.Count, "Doubles count");
+			
+			// note that 6 consecutive identical characters gives 5 repeats
+			Assert.AreEqual('b', freqs.OrderedDoubles[0].Key);
+			Assert.AreEqual(5.0/chars.Count, freqs.OrderedDoubles[0].Value);
+			
+			Assert.AreEqual('a', freqs.OrderedDoubles[1].Key);
+			Assert.AreEqual(4.0/chars.Count, freqs.OrderedDoubles[1].Value);		
 		}
 		
 		[Test()]
@@ -248,11 +261,19 @@ namespace EnigmaLiteTests
 			
 			var ans = textToRank.RankFrequency ();
 			
-			Assert.AreEqual (singles.Count, ans.Singles.Count, "Single char frequency counts match");
-			Assert.AreEqual (doubles.Count, ans.Doubles.Count, "Double char frequency counts match");
+			Assert.AreEqual (
+				singles.Count,
+				ans.Singles.Count,
+				"Single char frequency counts match"
+			);
+			Assert.AreEqual (
+				doubles.Count,
+				ans.Doubles.Count,
+				"Double char frequency counts match"
+			);
 			
-			Assert.AreEqual(ans.Doubles['u'], doubles['u']);
-			Assert.AreEqual(ans.Doubles['l'], doubles['l']);
+			Assert.AreEqual (ans.Doubles ['u'], doubles ['u']);
+			Assert.AreEqual (ans.Doubles ['l'], doubles ['l']);
 		}
 	}
 }
