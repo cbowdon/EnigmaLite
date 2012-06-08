@@ -22,13 +22,13 @@ namespace SerializeFrequencies
 		static void SerializeWordsAndChars (string inputFile)
 		{
             string cleanText;
-            List<KeyValuePair<char, double>> charFreqs;
-            List<KeyValuePair<string, double>> wordFreqs;
+            IList<KeyValuePair<char, double>> charFreqs;
+            IList<KeyValuePair<string, double>> wordFreqs;
           
             cleanText = File.ReadAllText(inputFile);
 
-            wordFreqs = cleanText.SplitByWords().RankFrequency();
-            charFreqs = cleanText.SplitByChars().RankFrequency();            
+            wordFreqs = cleanText.SplitByWords().RankFrequency().OrderedSingles;
+            charFreqs = cleanText.SplitByChars().RankFrequency().OrderedSingles;            
 
 			using (Stream stream = File.Open("chars.bin", FileMode.Create)) {
 				BinaryFormatter bin = new BinaryFormatter ();

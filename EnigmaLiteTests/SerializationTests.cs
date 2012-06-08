@@ -41,7 +41,7 @@ namespace EnigmaLiteTests
 		}
 		
 		[Test()]
-		public void DeserializeWords ()
+		public void UnserializeWords ()
 		{
 			using (Stream stream = File.Open("words.bin", FileMode.Open)) {
 				BinaryFormatter bin = new BinaryFormatter ();
@@ -53,7 +53,7 @@ namespace EnigmaLiteTests
 		}
 		
 		[Test]
-		public void DeserializeChars ()
+		public void UnserializeChars ()
 		{
 			using (Stream stream = File.Open("chars.bin", FileMode.Open)) {
 				BinaryFormatter bin = new BinaryFormatter ();
@@ -74,7 +74,9 @@ namespace EnigmaLiteTests
 		}
 		
 		[Test()]
-		public void DeSerializeFrequencies ()
+        /// "Un" instead of "De" because NUnit runs these in alphabetical order
+        /// </laziness>
+		public void UnserializeFrequencies ()
 		{
 			using (Stream stream = File.Open("freqs.bin", FileMode.Open)) {
 				BinaryFormatter bin = new BinaryFormatter ();

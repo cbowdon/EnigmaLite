@@ -20,7 +20,6 @@ namespace EnigmaLite
 			return text.ToCharArray ().ToList ();
 		}
 		
-
 		/// <summary>
 		/// Ranks the frequency of item occurence in an IEnumerable.
 		/// </summary>
@@ -93,19 +92,25 @@ namespace EnigmaLite
 			return dict;
 		}
 		
-		public static CipherDictionary SubsDict (IList<KeyValuePair<char,double>> cyph, IList<KeyValuePair<char,double>> real)
+        /// <summary>
+        /// Generate a substitution dictionary (char to char)
+        /// </summary>
+        /// <param name="cyph"></param>
+        /// <param name="real"></param>
+        /// <returns></returns>
+		public static CipherDictionary SubsDict (Frequencies<char> cyph, Frequencies<char> real)
 		{
-			var l1 = real.Count;
-			var l2 = cyph.Count;
+			var l1 = real.Singles.Count;
+			var l2 = cyph.Singles.Count;
 			
 			var dict = new CipherDictionary ();
 			
 			for (int i = 0; i < Math.Min(l1,l2); i++) {
-				dict.Add (cyph [i].Key, real [i].Key);
+				dict.Add (cyph.OrderedSingles [i].Key, real.OrderedSingles [i].Key);
 			}
 			
 			return dict;
-		}				
+		}	
 		
 		/// <summary>
 		/// Fraction of words in the decipher-attempt that are real words
@@ -124,8 +129,14 @@ namespace EnigmaLite
 			}
 			return sum;
 		}
-				
-		public static string SubChars (this string str, Dictionary<char,char> dict)
+		
+		/// <summary>
+		/// Apply substition dictionary to string.
+		/// </summary>
+		/// <param name="str"></param>
+		/// <param name="dict"></param>
+		/// <returns></returns>
+		public static string SubChars (this string str, IDictionary<char,char> dict)
 		{
 			var allChars = str.ToCharArray ();
 			var len = allChars.Length;

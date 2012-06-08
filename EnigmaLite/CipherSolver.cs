@@ -107,7 +107,7 @@ namespace EnigmaLite
             Problem = problem;
             var chars = Problem.SplitByChars();
             var freqs = chars.RankFrequency();			
-            Cipher = (CipherDictionary)TextAnalysis.SubsDict(freqs.OrderedSingles, realCharFreqs);
+            Cipher = (CipherDictionary)TextAnalysis.SubsDict(freqs, realCharFreqs);
             SubAndScore();
             Cipher.ItemChanged += delegate(object sender, EventArgs e) { SubAndScore(); };			            
         }		
