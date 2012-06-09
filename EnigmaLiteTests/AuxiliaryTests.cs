@@ -288,8 +288,7 @@ namespace EnigmaLiteTests
 			var closest = "ny";
 			var sorted = (from r in realWordFreqs orderby r.Value descending select r).ToList ();			
 
-			Assert.AreEqual(closest, text.BestMatch(sorted));
-			throw new NotImplementedException ();
+			Assert.AreEqual(new KeyValuePair<string,string>("my", closest), text.BestMatch(sorted));			
 		}
 		
 		/// <summary>
