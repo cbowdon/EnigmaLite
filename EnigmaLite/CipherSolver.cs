@@ -9,9 +9,9 @@ namespace EnigmaLite
 	public class CipherSolver : IDecipherer
 	{
 		#region Protected properties		
-		protected Dictionary<string,double> realWordFreqs { get; set; }
+		protected Frequencies<string> realWordFreqs { get; set; }
 
-		protected List<KeyValuePair<char,double>> realCharFreqs { get; set; }
+		protected Frequencies<char> realCharFreqs { get; set; }
 		#endregion
 		
 		#region Public properties	
@@ -37,7 +37,7 @@ namespace EnigmaLite
                 {
                     _realWordsFile = value;
                     DeserializeRealWords ();
-                    SolutionScore = TextAnalysis.ScoreSubd(Solution.SplitByWords(), realWordFreqs);
+                    SolutionScore = TextAnalysis.ScoreSubd(Solution.SplitByWords(), realWordFreqs.Singles);
                 }
             }
         }
@@ -75,24 +75,23 @@ namespace EnigmaLite
 		{
 			using (Stream stream = File.Open(RealWordsFile, FileMode.Open)) {
 				BinaryFormatter bin = new BinaryFormatter ();
-				var deserializedWords = (List<KeyValuePair<string,double>>)bin.Deserialize (stream);
-				realWordFreqs = deserializedWords.ToDict ();
+				realWordFreqs = (Frequencies<string>)bin.Deserialize (stream);				
 			}
         }
         protected void DeserializeRealChars ()
         {
 			using (Stream stream = File.Open(RealCharsFile, FileMode.Open)) {
 				BinaryFormatter bin = new BinaryFormatter ();
-				realCharFreqs = (List<KeyValuePair<char,double>>)bin.Deserialize (stream);				
+				realCharFreqs = (Frequencies<char>)bin.Deserialize (stream);				
 			}
 		}
-				
+						
 		protected void SubAndScore ()
 		{
 			Solution = Problem.SubChars (Cipher);
 			SolutionScore = TextAnalysis.ScoreSubd (
 				Solution.SplitByWords (),
-				realWordFreqs
+				realWordFreqs.Singles
 			);
             if (SolutionUpdated != null)
             {

@@ -150,6 +150,11 @@ namespace EnigmaLite
 			}			
 			return new String (newChars);
 		}
+		
+		public static int StepsRequired(this string originalString, string targetString)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
 

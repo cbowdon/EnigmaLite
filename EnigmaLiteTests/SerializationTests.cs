@@ -11,18 +11,16 @@ namespace EnigmaLiteTests
 	public class SerializationTests
 	{						
 		string shortStory, cleanText;
-		IList<KeyValuePair<char,double>> charFreqs;
-		IList<KeyValuePair<string,double>> wordFreqs;
-		Frequencies<string> freqs;
+		Frequencies<char> charwordFreqs;
+		Frequencies<string> wordFreqs;
 		
 		public SerializationTests ()
 		{	
 			shortStory = "DNA - Private Life Of Genghis Khan.txt";		
 			cleanText = File.ReadAllText (shortStory);			
-			
-			freqs = cleanText.SplitByWords ().RankFrequency ();
-			wordFreqs = cleanText.SplitByWords ().RankFrequency ().OrderedSingles;
-			charFreqs = cleanText.SplitByChars ().RankFrequency ().OrderedSingles;			
+						
+			wordFreqs = cleanText.SplitByWords ().RankFrequency ();
+			charwordFreqs = cleanText.SplitByChars ().RankFrequency ();			
 			
 			SerializeWordsAndChars ();
 		}
@@ -31,7 +29,7 @@ namespace EnigmaLiteTests
 		{			
 			using (Stream stream = File.Open("chars.bin", FileMode.Create)) {
 				BinaryFormatter bin = new BinaryFormatter ();
-				bin.Serialize (stream, charFreqs);
+				bin.Serialize (stream, charwordFreqs);
 			}
 			
 			using (Stream stream = File.Open("words.bin", FileMode.Create)) {
@@ -46,7 +44,7 @@ namespace EnigmaLiteTests
 			using (Stream stream = File.Open("words.bin", FileMode.Open)) {
 				BinaryFormatter bin = new BinaryFormatter ();
 
-				var deserializedWords = (List<KeyValuePair<string,double>>)bin.Deserialize (stream);
+				var deserializedWords = (Frequencies<string>)bin.Deserialize (stream);
 				
 				Assert.AreEqual (deserializedWords, wordFreqs);
 			}
@@ -58,18 +56,18 @@ namespace EnigmaLiteTests
 			using (Stream stream = File.Open("chars.bin", FileMode.Open)) {
 				BinaryFormatter bin = new BinaryFormatter ();
 
-				var deserializedChars = (List<KeyValuePair<char,double>>)bin.Deserialize (stream);
+				var deserializedChars = (Frequencies<char>)bin.Deserialize (stream);
 				
-				Assert.AreEqual (deserializedChars, charFreqs);
+				Assert.AreEqual (deserializedChars, charwordFreqs);
 			}
 		}
 		
 		[Test()]
 		public void SerializeFrequencies ()
 		{
-			using (Stream stream = File.Open("freqs.bin", FileMode.Create)) {
+			using (Stream stream = File.Open("wordFreqs.bin", FileMode.Create)) {
 				BinaryFormatter bin = new BinaryFormatter ();
-				bin.Serialize (stream, freqs);
+				bin.Serialize (stream, wordFreqs);
 			}
 		}
 		
@@ -78,28 +76,28 @@ namespace EnigmaLiteTests
         /// </laziness>
 		public void UnserializeFrequencies ()
 		{
-			using (Stream stream = File.Open("freqs.bin", FileMode.Open)) {
+			using (Stream stream = File.Open("wordFreqs.bin", FileMode.Open)) {
 				BinaryFormatter bin = new BinaryFormatter ();
-				var deserializedFreqs = (Frequencies<string>)bin.Deserialize (stream);
+				var deserializedwordFreqs = (Frequencies<string>)bin.Deserialize (stream);
 
-				Assert.AreEqual (deserializedFreqs.Singles.Count, freqs.Singles.Count);
-				Assert.AreEqual (deserializedFreqs.Doubles.Count, freqs.Doubles.Count);
-				foreach (var kv in deserializedFreqs.Singles) {
-					Assert.AreEqual (kv.Value, freqs.Singles [kv.Key]);					
+				Assert.AreEqual (deserializedwordFreqs.Singles.Count, wordFreqs.Singles.Count);
+				Assert.AreEqual (deserializedwordFreqs.Doubles.Count, wordFreqs.Doubles.Count);
+				foreach (var kv in deserializedwordFreqs.Singles) {
+					Assert.AreEqual (kv.Value, wordFreqs.Singles [kv.Key]);					
 				}
-				foreach (var kv in deserializedFreqs.Doubles) {
-					Assert.AreEqual (kv.Value, freqs.Doubles [kv.Key]);					
+				foreach (var kv in deserializedwordFreqs.Doubles) {
+					Assert.AreEqual (kv.Value, wordFreqs.Doubles [kv.Key]);					
 				}
-				for (int i = 0; i < deserializedFreqs.Singles.Count; i++) {
+				for (int i = 0; i < deserializedwordFreqs.Singles.Count; i++) {
 					Assert.AreEqual (
-						deserializedFreqs.OrderedSingles[i],
-						freqs.OrderedSingles[i]
+						deserializedwordFreqs.OrderedSingles[i],
+						wordFreqs.OrderedSingles[i]
 					);
 				}
-				for (int i = 0; i < deserializedFreqs.Doubles.Count; i++) {
+				for (int i = 0; i < deserializedwordFreqs.Doubles.Count; i++) {
 					Assert.AreEqual (
-						deserializedFreqs.OrderedDoubles[i],
-						freqs.OrderedDoubles[i]
+						deserializedwordFreqs.OrderedDoubles[i],
+						wordFreqs.OrderedDoubles[i]
 					);
 				}
 			}

@@ -101,8 +101,8 @@ namespace EnigmaLiteTests
 		[Test()]
 		public void SubsDict ()
 		{
-			var engFreqs = TextAnalysis.RankFrequency (charText).OrderedSingles;
-			var cypFreqs = TextAnalysis.RankFrequency (cyphered).OrderedSingles;
+			var engFreqs = TextAnalysis.RankFrequency (charText);
+			var cypFreqs = TextAnalysis.RankFrequency (cyphered);
 			
 			var ans = new Dictionary<char,char> ();
 			ans.Add ('z', 'a');
@@ -178,7 +178,7 @@ namespace EnigmaLiteTests
 			var chars = text.SplitByChars ();
 			var words = text.SplitByWords ();
 			
-			var freqs = chars.RankFrequency ().OrderedSingles;
+			var freqs = chars.RankFrequency ();
 			
 			// create basic substition cipher
 			var cipher = new Dictionary<char, char> ();
@@ -195,7 +195,7 @@ namespace EnigmaLiteTests
 
 			var cText = File.ReadAllText (encryptedStory);
 			// ciphered text frequencies
-			var ctf = cText.SplitByChars ().RankFrequency ().OrderedSingles; 
+			var ctf = cText.SplitByChars ().RankFrequency (); 
 			
 			var subsDict = TextAnalysis.SubsDict (ctf, freqs);
 		
@@ -274,6 +274,45 @@ namespace EnigmaLiteTests
 			
 			Assert.AreEqual (ans.Doubles ['u'], doubles ['u']);
 			Assert.AreEqual (ans.Doubles ['l'], doubles ['l']);
+		}
+		
+		/// <summary>
+		/// Finds the closest match to the most frequent word. 
+		/// If multiple matches with equal closeness, the first.
+		/// If no match >50%, closest match to second most frequent word (and so on).
+		/// </summary>
+		[Test()]
+		public void BestMatch ()
+		{
+			throw new NotImplementedException();
+		}
+		
+		/// <summary>
+		/// Scores closeness of two strings:
+		/// how many substitution steps to get from a to b?
+		/// Case insensitive.
+		/// </summary>
+		[Test()]
+		public void StepsRequired ()
+		{
+			var clean = "text";
+			// one step
+			var dirty1 = "tezt";
+			// two steps
+			var dirty2 = "rexo";
+			// three steps
+			var dirty3 = "anxi";
+			// four steps
+			var dirty4 = "cats";
+			// infinite steps
+			var dirty5 = "bees";
+			
+			Assert.AreEqual(0, clean.StepsRequired(clean));
+			Assert.AreEqual(1, clean.StepsRequired(dirty1));
+			Assert.AreEqual(2, clean.StepsRequired(dirty2));
+			Assert.AreEqual(3, clean.StepsRequired(dirty3));
+			Assert.AreEqual(4, clean.StepsRequired(dirty4));
+			Assert.AreEqual(-1, clean.StepsRequired(dirty5));			
 		}
 	}
 }
