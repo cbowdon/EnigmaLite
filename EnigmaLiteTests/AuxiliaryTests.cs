@@ -91,11 +91,11 @@ namespace EnigmaLiteTests
 			Assert.AreEqual (5, freqs.Doubles.Count, "Doubles count");
 			
 			// note that 6 consecutive identical characters gives 5 repeats
-			Assert.AreEqual('b', freqs.OrderedDoubles[0].Key);
-			Assert.AreEqual(5.0/chars.Count, freqs.OrderedDoubles[0].Value);
+			Assert.AreEqual ('b', freqs.OrderedDoubles [0].Key);
+			Assert.AreEqual (5.0 / chars.Count, freqs.OrderedDoubles [0].Value);
 			
-			Assert.AreEqual('a', freqs.OrderedDoubles[1].Key);
-			Assert.AreEqual(4.0/chars.Count, freqs.OrderedDoubles[1].Value);		
+			Assert.AreEqual ('a', freqs.OrderedDoubles [1].Key);
+			Assert.AreEqual (4.0 / chars.Count, freqs.OrderedDoubles [1].Value);		
 		}
 		
 		[Test()]
@@ -284,7 +284,12 @@ namespace EnigmaLiteTests
 		[Test()]
 		public void BestMatch ()
 		{
-			throw new NotImplementedException();
+			var text = "aehhon ny mrne qj Uoam!";
+			var closest = "ny";
+			var sorted = (from r in realWordFreqs orderby r.Value descending select r).ToList ();			
+
+			Assert.AreEqual(closest, text.BestMatch(sorted));
+			throw new NotImplementedException ();
 		}
 		
 		/// <summary>
@@ -307,12 +312,12 @@ namespace EnigmaLiteTests
 			// infinite steps
 			var dirty5 = "bees";
 			
-			Assert.AreEqual(0, clean.StepsRequired(clean));
-			Assert.AreEqual(1, clean.StepsRequired(dirty1));
-			Assert.AreEqual(2, clean.StepsRequired(dirty2));
-			Assert.AreEqual(3, clean.StepsRequired(dirty3));
-			Assert.AreEqual(4, clean.StepsRequired(dirty4));
-			Assert.AreEqual(-1, clean.StepsRequired(dirty5));			
+			Assert.AreEqual (0, clean.StepsRequired (clean));
+			Assert.AreEqual (1, clean.StepsRequired (dirty1));
+			Assert.AreEqual (2, clean.StepsRequired (dirty2));
+			Assert.AreEqual (3, clean.StepsRequired (dirty3));
+			Assert.AreEqual (4, clean.StepsRequired (dirty4));
+			Assert.AreEqual (-1, clean.StepsRequired (dirty5));			
 		}
 	}
 }
