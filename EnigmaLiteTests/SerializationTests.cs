@@ -11,7 +11,7 @@ namespace EnigmaLiteTests
 	public class SerializationTests
 	{						
 		string shortStory, cleanText;
-		Frequencies<char> charwordFreqs;
+		Frequencies<char> charFreqs;
 		Frequencies<string> wordFreqs;
 		
 		public SerializationTests ()
@@ -20,7 +20,7 @@ namespace EnigmaLiteTests
 			cleanText = File.ReadAllText (shortStory);			
 						
 			wordFreqs = cleanText.SplitByWords ().RankFrequency ();
-			charwordFreqs = cleanText.SplitByChars ().RankFrequency ();			
+			charFreqs = cleanText.SplitByChars ().RankFrequency ();			
 			
 			SerializeWordsAndChars ();
 		}
@@ -29,7 +29,7 @@ namespace EnigmaLiteTests
 		{			
 			using (Stream stream = File.Open("chars.bin", FileMode.Create)) {
 				BinaryFormatter bin = new BinaryFormatter ();
-				bin.Serialize (stream, charwordFreqs);
+				bin.Serialize (stream, charFreqs);
 			}
 			
 			using (Stream stream = File.Open("words.bin", FileMode.Create)) {
@@ -46,7 +46,7 @@ namespace EnigmaLiteTests
 
 				var deserializedWords = (Frequencies<string>)bin.Deserialize (stream);
 				
-				Assert.AreEqual (deserializedWords, wordFreqs);
+				CompareFrequencies (deserializedWords, wordFreqs);
 			}
 		}
 		
@@ -58,7 +58,7 @@ namespace EnigmaLiteTests
 
 				var deserializedChars = (Frequencies<char>)bin.Deserialize (stream);
 				
-				Assert.AreEqual (deserializedChars, charwordFreqs);
+				CompareFrequencies (deserializedChars, charFreqs);
 			}
 		}
 		
@@ -72,34 +72,45 @@ namespace EnigmaLiteTests
 		}
 		
 		[Test()]
-        /// "Un" instead of "De" because NUnit runs these in alphabetical order
+		/// "Un" instead of "De" because NUnit runs these in alphabetical order
         /// </laziness>
 		public void UnserializeFrequencies ()
 		{
 			using (Stream stream = File.Open("wordFreqs.bin", FileMode.Open)) {
 				BinaryFormatter bin = new BinaryFormatter ();
 				var deserializedwordFreqs = (Frequencies<string>)bin.Deserialize (stream);
-
-				Assert.AreEqual (deserializedwordFreqs.Singles.Count, wordFreqs.Singles.Count);
-				Assert.AreEqual (deserializedwordFreqs.Doubles.Count, wordFreqs.Doubles.Count);
-				foreach (var kv in deserializedwordFreqs.Singles) {
-					Assert.AreEqual (kv.Value, wordFreqs.Singles [kv.Key]);					
-				}
-				foreach (var kv in deserializedwordFreqs.Doubles) {
-					Assert.AreEqual (kv.Value, wordFreqs.Doubles [kv.Key]);					
-				}
-				for (int i = 0; i < deserializedwordFreqs.Singles.Count; i++) {
-					Assert.AreEqual (
-						deserializedwordFreqs.OrderedSingles[i],
-						wordFreqs.OrderedSingles[i]
-					);
-				}
-				for (int i = 0; i < deserializedwordFreqs.Doubles.Count; i++) {
-					Assert.AreEqual (
-						deserializedwordFreqs.OrderedDoubles[i],
-						wordFreqs.OrderedDoubles[i]
-					);
-				}
+				
+				CompareFrequencies (deserializedwordFreqs, wordFreqs);
+			}
+		}
+				
+		public void CompareFrequencies<T> (Frequencies<T> f1, Frequencies<T> f2)
+		{
+			Assert.AreEqual (
+				f1.Singles.Count,
+				f2.Singles.Count
+			);
+			Assert.AreEqual (
+				f1.Doubles.Count,
+				f2.Doubles.Count
+			);
+			foreach (var kv in f1.Singles) {
+				Assert.AreEqual (kv.Value, f2.Singles [kv.Key]);					
+			}
+			foreach (var kv in f1.Doubles) {
+				Assert.AreEqual (kv.Value, f2.Doubles [kv.Key]);					
+			}
+			for (int i = 0; i < f1.Singles.Count; i++) {
+				Assert.AreEqual (
+						f1.OrderedSingles [i],
+						f2.OrderedSingles [i]
+				);
+			}
+			for (int i = 0; i < f1.Doubles.Count; i++) {
+				Assert.AreEqual (
+						f1.OrderedDoubles [i],
+						f2.OrderedDoubles [i]
+				);
 			}
 		}
 	}
