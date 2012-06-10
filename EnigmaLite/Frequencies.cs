@@ -8,6 +8,12 @@ namespace EnigmaLite
 	[Serializable()]
 	public class Frequencies<T> : ISerializable
 	{
+		public Frequencies (IDictionary<T, double> singles)
+		{			
+			Singles = singles;
+			Doubles = new Dictionary<T, double>();
+		}
+		
 		public Frequencies (IDictionary<T, double> singles, IDictionary<T, double> doubles)
 		{			
 			Singles = singles;

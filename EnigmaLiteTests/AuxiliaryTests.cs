@@ -277,22 +277,20 @@ namespace EnigmaLiteTests
 		}
 		
 		/// <summary>
-		/// Finds the closest match to the most frequent word. 
+		/// Finds the closest match to the most frequent word (not including perfect matches). 
 		/// If multiple matches with equal closeness, the first.
 		/// If no match >50%, closest match to second most frequent word (and so on).
 		/// </summary>
 		[Test()]
 		public void BestMatch ()
 		{
-			var text = "aehhon ny mrne qj Uoam!";
-			var closest = "ny";
-			var sorted = (from r in realWordFreqs orderby r.Value descending select r).ToList ();			
+			var text = "aehhon nx mrne qs Uqn!";
+			var closest = "qs";			
 
 			// is this the best way for this to work?
 			Assert.AreEqual (
-				new KeyValuePair<string,string> ("my", closest),
-				"error"
-//				text.BestMatch(sorted)
+				"aehhon nx mrne is Uin!",				
+				text.BestMatch (new Frequencies<string>(realWordFreqs))
 			);			
 		}
 		
@@ -302,7 +300,7 @@ namespace EnigmaLiteTests
 		/// Case insensitive.
 		/// </summary>
 		[Test()]
-		public void StepsRequired ()
+		public void SubsRequired ()
 		{
 			var clean = "taxi";
 			// one step
@@ -318,17 +316,21 @@ namespace EnigmaLiteTests
 			// infinite steps
 			var dirty6 = "taxis";
 			
-			Assert.AreEqual (0, clean.StepsRequired (clean));
-			Assert.AreEqual (1, dirty1.StepsRequired (clean));
-			Assert.AreEqual (2, dirty2.StepsRequired (clean));
-			Assert.AreEqual (3, dirty3.StepsRequired (clean));
-			Assert.AreEqual (4, dirty4.StepsRequired (clean));
-			Assert.AreEqual (-1, dirty5.StepsRequired (clean), "double letter mismatch");			
-			Assert.AreEqual (-1, dirty6.StepsRequired (clean), "length mismatch");			
+			Assert.AreEqual (0, clean.SubsRequired (clean));
+			Assert.AreEqual (1, dirty1.SubsRequired (clean));
+			Assert.AreEqual (2, dirty2.SubsRequired (clean));
+			Assert.AreEqual (3, dirty3.SubsRequired (clean));
+			Assert.AreEqual (4, dirty4.SubsRequired (clean));
+			Assert.AreEqual (-1, dirty5.SubsRequired (clean), "double letter mismatch");			
+			Assert.AreEqual (-1, dirty6.SubsRequired (clean), "length mismatch");			
 			
 			Dictionary<char,char> miniCipher;
-			Assert.AreEqual (1, "oexo".StepsRequired ("text", out miniCipher), "double letter");
-			Assert.AreEqual('t', miniCipher['o']);			
+			Assert.AreEqual (
+				1,
+				"oexo".SubsRequired ("text", out miniCipher),
+				"double letter"
+			);
+			Assert.AreEqual ('t', miniCipher ['o']);			
 		}
 	}
 }

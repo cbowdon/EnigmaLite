@@ -151,7 +151,22 @@ namespace EnigmaLite
 			return new String (newChars);
 		}
 		
-		public static int StepsRequired (this string targetStr, string origStr, out Dictionary<char,char> miniCipher)
+		/// <summary>
+		/// Get the number of character substitions required to change original string to target.
+		/// </summary>
+		/// <returns>
+		/// Number of substition steps required (-1 if not possible)
+		/// </returns>
+		/// <param name='targetStr'>
+		/// Target string.
+		/// </param>
+		/// <param name='origStr'>
+		/// Original string.
+		/// </param>
+		/// <param name='miniCipher'>
+		/// Character substitions key.
+		/// </param>
+		public static int SubsRequired (this string targetStr, string origStr, out Dictionary<char,char> miniCipher)
 		{
 			/// get letter histogram for each
 			/// if histogram does not have the same shape, fail
@@ -190,20 +205,31 @@ namespace EnigmaLite
 				}
 			}
 			
-//			// remove non-changers
-//			var changes = from c in cipher where c.Key != c.Value select c;			
-//			
-//			// out the miniCipher
-//			miniCipher = changes.ToDictionary<KeyValuePair<char,char>,char> (x => x.Key);			
-//			
-//			// return number of changes
+			// return number of changes
 			return miniCipher.Count;
 		}
 		
-		public static int StepsRequired (this string targetStr, string origStr)
+		/// <summary>
+		/// Get the number of character substitions required to change original string to target.
+		/// </summary>
+		/// <returns>
+		/// Number of substition steps required (-1 if not possible)
+		/// </returns>
+		/// <param name='targetStr'>
+		/// Target string.
+		/// </param>
+		/// <param name='origStr'>
+		/// Original string.
+		/// </param>
+		public static int SubsRequired (this string targetStr, string origStr)
 		{
 			Dictionary<char,char> waste;
-			return targetStr.StepsRequired (origStr, out waste);
+			return targetStr.SubsRequired (origStr, out waste);
+		}
+	
+		public static string BestMatch (this string origStr, Frequencies<string> realWords)
+		{
+			throw new NotImplementedException ();
 		}
 	}
 }
