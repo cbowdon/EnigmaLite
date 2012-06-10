@@ -245,6 +245,25 @@ namespace EnigmaLite
 			/// Finds the closest match to the most frequent word (not including perfect matches). 
 			/// If multiple matches with equal closeness, the first.
 			/// If no match >50%, closest match to second most frequent word (and so on).	
+		
+			// from SubsRequired to a 'closeness' score
+			Func<int,string,double> matchScore = (x, y) => {
+				if (x < 0) {
+					return 0.0;
+				} else if (x == 1) {
+					return 1.0;
+				} else {
+					return x / (double)y.Length;
+				}				
+			};
+			
+			var origWords = oneStep.SplitByWords ();
+			
+			// for f in freqs:
+				// for o in origWords:
+					// get matchScores
+				// if highest matchScore is 0.5 <= mS < 1.0
+				// break and use that miniCipher
 			
 			miniCipher = new Dictionary<char, char> ();
 			return "numpty";
