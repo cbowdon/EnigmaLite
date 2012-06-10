@@ -92,12 +92,12 @@ namespace EnigmaLite
 			return dict;
 		}
 		
-        /// <summary>
-        /// Generate a substitution dictionary (char to char)
-        /// </summary>
-        /// <param name="cyph"></param>
-        /// <param name="real"></param>
-        /// <returns></returns>
+		/// <summary>
+		/// Generate a substitution dictionary (char to char)
+		/// </summary>
+		/// <param name="cyph"></param>
+		/// <param name="real"></param>
+		/// <returns></returns>
 		public static CipherDictionary SubsDict (Frequencies<char> cyph, Frequencies<char> real)
 		{
 			var l1 = real.Singles.Count;
@@ -151,9 +151,59 @@ namespace EnigmaLite
 			return new String (newChars);
 		}
 		
-		public static int StepsRequired(this string originalString, string targetString)
+		public static int StepsRequired (this string targetStr, string origStr, out Dictionary<char,char> miniCipher)
 		{
-			throw new NotImplementedException();
+			/// get letter histogram for each
+			/// if histogram does not have the same shape, fail
+			/// else count and return the number of non-identicals			
+			
+			// assign these first
+			var tLen = targetStr.Length;
+			miniCipher = new Dictionary<char, char> (tLen);
+			
+			// bomb out early			
+			if (tLen != origStr.Length) {
+				return -1;
+			}
+			
+			var targ = targetStr.ToCharArray ();
+			var orig = origStr.ToCharArray ();			
+			var cipher = new Dictionary<char,char> (tLen);
+			
+			// loop through and build dictionary
+			for (int i = 0; i < tLen; i++) {
+																							
+				// got it in the minicipher?
+				try {
+					cipher.Add (targ [i], orig [i]);
+				} catch {
+					// if it's already in the minicipher, is it the same?					
+					if (cipher [targ [i]] != orig [i]) {
+						return -1;
+					}
+				}				
+			}						
+						
+			foreach (var kv in cipher) {
+				if (kv.Key != kv.Value) {
+					miniCipher.Add (kv.Key, kv.Value);
+				}
+			}
+			
+//			// remove non-changers
+//			var changes = from c in cipher where c.Key != c.Value select c;			
+//			
+//			// out the miniCipher
+//			miniCipher = changes.ToDictionary<KeyValuePair<char,char>,char> (x => x.Key);			
+//			
+//			// return number of changes
+			return miniCipher.Count;
+		}
+		
+		public static int StepsRequired (this string targetStr, string origStr)
+		{
+			Dictionary<char,char> waste;
+			return targetStr.StepsRequired (origStr, out waste);
 		}
 	}
 }

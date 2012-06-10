@@ -288,7 +288,12 @@ namespace EnigmaLiteTests
 			var closest = "ny";
 			var sorted = (from r in realWordFreqs orderby r.Value descending select r).ToList ();			
 
-			Assert.AreEqual(new KeyValuePair<string,string>("my", closest), text.BestMatch(sorted));			
+			// is this the best way for this to work?
+			Assert.AreEqual (
+				new KeyValuePair<string,string> ("my", closest),
+				"error"
+//				text.BestMatch(sorted)
+			);			
 		}
 		
 		/// <summary>
@@ -299,24 +304,31 @@ namespace EnigmaLiteTests
 		[Test()]
 		public void StepsRequired ()
 		{
-			var clean = "text";
+			var clean = "taxi";
 			// one step
-			var dirty1 = "tezt";
+			var dirty1 = "texi";
 			// two steps
-			var dirty2 = "rexo";
+			var dirty2 = "raxo";
 			// three steps
-			var dirty3 = "anxi";
+			var dirty3 = "anxo";
 			// four steps
-			var dirty4 = "cats";
+			var dirty4 = "dogs";
 			// infinite steps
 			var dirty5 = "bees";
+			// infinite steps
+			var dirty6 = "taxis";
 			
 			Assert.AreEqual (0, clean.StepsRequired (clean));
-			Assert.AreEqual (1, clean.StepsRequired (dirty1));
-			Assert.AreEqual (2, clean.StepsRequired (dirty2));
-			Assert.AreEqual (3, clean.StepsRequired (dirty3));
-			Assert.AreEqual (4, clean.StepsRequired (dirty4));
-			Assert.AreEqual (-1, clean.StepsRequired (dirty5));			
+			Assert.AreEqual (1, dirty1.StepsRequired (clean));
+			Assert.AreEqual (2, dirty2.StepsRequired (clean));
+			Assert.AreEqual (3, dirty3.StepsRequired (clean));
+			Assert.AreEqual (4, dirty4.StepsRequired (clean));
+			Assert.AreEqual (-1, dirty5.StepsRequired (clean), "double letter mismatch");			
+			Assert.AreEqual (-1, dirty6.StepsRequired (clean), "length mismatch");			
+			
+			Dictionary<char,char> miniCipher;
+			Assert.AreEqual (1, "oexo".StepsRequired ("text", out miniCipher), "double letter");
+			Assert.AreEqual('t', miniCipher['o']);			
 		}
 	}
 }
