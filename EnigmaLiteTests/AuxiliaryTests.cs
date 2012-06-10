@@ -276,23 +276,27 @@ namespace EnigmaLiteTests
 			Assert.AreEqual (ans.Doubles ['l'], doubles ['l']);
 		}
 		
-		/// <summary>
-		/// Finds the closest match to the most frequent word (not including perfect matches). 
-		/// If multiple matches with equal closeness, the first.
-		/// If no match >50%, closest match to second most frequent word (and so on).
-		/// </summary>
+//		/// <summary>
+//		/// Finds the closest match to the most frequent word (not including perfect matches). 
+//		/// If multiple matches with equal closeness, the first.
+//		/// If no match >50%, closest match to second most frequent word (and so on).
+//		/// </summary>
 		[Test()]
-		public void BestMatch ()
+		public void SolveByMatching ()
 		{
 			var text = "aehhon nx mrne qs Uqn!";
-			var closest = "qs";			
-
-			// is this the best way for this to work?
-			Assert.AreEqual (
-				"aehhon nx mrne is Uin!",				
-				text.BestMatch (new Frequencies<string>(realWordFreqs))
-			);			
+			Dictionary<char,char> miniCipher;
+			var ans = TextAnalysis.SolveByMatching (
+				text,
+				new Frequencies<string> (realWordFreqs),
+				out miniCipher);
+						
+			Assert.AreEqual ("aehhon nx mrne is Uin!", ans);			
+			Assert.AreEqual ('i', miniCipher ['q']);
+			Assert.AreEqual (1, miniCipher.Count);
 		}
+		
+		
 		
 		/// <summary>
 		/// Scores closeness of two strings:

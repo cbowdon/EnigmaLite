@@ -227,9 +227,27 @@ namespace EnigmaLite
 			return targetStr.SubsRequired (origStr, out waste);
 		}
 	
-		public static string BestMatch (this string origStr, Frequencies<string> realWords)
+//		/// <summary>
+//		/// Finds the best match (not inc. already-perfect matches) and subs letters as necessary
+//		/// </summary>
+//		/// <returns>
+//		/// The original text with the new substitions
+//		/// </returns>
+//		/// <param name='origStr'>
+//		/// Original string.
+//		/// </param>
+//		/// <param name='realWords'>
+//		/// Real words.
+//		/// </param> 
+
+		public static string SolveByMatching (string oneStep, Frequencies<string> freqs, out Dictionary<char,char> miniCipher)
 		{
-			throw new NotImplementedException ();
+			/// Finds the closest match to the most frequent word (not including perfect matches). 
+			/// If multiple matches with equal closeness, the first.
+			/// If no match >50%, closest match to second most frequent word (and so on).	
+			
+			miniCipher = new Dictionary<char, char> ();
+			return "numpty";
 		}
 	}
 }

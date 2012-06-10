@@ -71,7 +71,7 @@ namespace EnigmaLiteTests
 			// should be able to mess with it
 			solver.Cipher ['e'] = '!';
 			Assert.AreNotEqual (sol, solver.Solution, "different solution");			
-			Assert.AreEqual(2, eventFired);
+			Assert.AreEqual (2, eventFired);
 		}
 	}
 }
