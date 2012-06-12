@@ -389,14 +389,28 @@ namespace EnigmaLiteTests
 		{
 			var d1 = new Dictionary<char,char> ();
 			var d2 = new Dictionary<char,char> ();
+			var d3 = new Dictionary<char,char> ();			
 			
 			d1.Add ('a', 'n');
 			d1.Add ('b', 'o');
 			d1.Add ('c', 'p');
 				
 			d2.Add ('d', 'q');
+			// should replace value 'n' with 'z'
 			d2.Add ('a', 'z');
+			// should swap values of keys 'b' and 'c'
+			d2.Add ('c', 'o');
 			
+			d3.Add ('a', 'z');
+			d3.Add ('b', 'p');
+			d3.Add ('c', 'o');
+			d3.Add ('d', 'q');
+			
+			var d4 = TextAnalysis.MergeDicts (d1, d2);
+			
+			foreach (var kv in d3) {
+				Assert.AreEqual (kv.Value, d4 [kv.Key]);
+			}
 		}
 	}
 }

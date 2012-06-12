@@ -306,6 +306,11 @@ namespace EnigmaLite
 			}
 			return miniCipher;
 		}
+		
+		public static Dictionary<TKey,TValue> MergeDicts<TKey,TValue> (IDictionary<TKey,TValue> d1, IDictionary<TKey,TValue> d2)
+		{
+			throw new NotImplementedException ();
+		}
 	}
 }
 
