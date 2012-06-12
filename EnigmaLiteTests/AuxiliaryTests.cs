@@ -394,22 +394,34 @@ namespace EnigmaLiteTests
 			d1.Add ('a', 'n');
 			d1.Add ('b', 'o');
 			d1.Add ('c', 'p');
-				
-			d2.Add ('d', 'q');
+			d1.Add ('d', 'q');
+			d1.Add ('e', 'r');	
+			
+			// straightforward add
+			d2.Add ('f', 's');
 			// should replace value 'n' with 'z'
 			d2.Add ('a', 'z');
 			// should swap values of keys 'b' and 'c'
 			d2.Add ('c', 'o');
-			
+			// should set key with same value to '*'
+			d2.Add ('g', 'r');
+						
 			d3.Add ('a', 'z');
 			d3.Add ('b', 'p');
 			d3.Add ('c', 'o');
 			d3.Add ('d', 'q');
+			d3.Add ('e', '*');
+			d3.Add ('f', 's');
+			d3.Add ('g', 'r');
 			
 			var d4 = TextAnalysis.MergeDicts (d1, d2);
 			
 			foreach (var kv in d3) {
-				Assert.AreEqual (kv.Value, d4 [kv.Key]);
+				Assert.AreEqual (
+					kv.Value,
+					d4 [kv.Key],
+					string.Format("{0}\td4[{1}] =\t{2}\n", kv, kv.Key, d4[kv.Key])
+				);
 			}
 		}
 	}

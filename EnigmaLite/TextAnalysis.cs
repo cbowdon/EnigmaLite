@@ -307,9 +307,51 @@ namespace EnigmaLite
 			return miniCipher;
 		}
 		
-		public static Dictionary<TKey,TValue> MergeDicts<TKey,TValue> (IDictionary<TKey,TValue> d1, IDictionary<TKey,TValue> d2)
+		public static IDictionary<char,char> MergeDicts (IDictionary<char,char> d1, IDictionary<char,char> d2)
 		{
-			throw new NotImplementedException ();
+			var d3 = d1;
+			
+			var reverseD1 = new Dictionary<char,char> ();
+			foreach (var kv in d1) {
+				reverseD1.Add (kv.Value, kv.Key);
+			}
+			
+			foreach (var kv in d2) {
+								
+				// does d1 contain the key?
+				char v;
+				var hasKey = d1.TryGetValue (kv.Key, out v);
+				
+				// does d1 contain the value?
+				char k;
+				var hasVal = reverseD1.TryGetValue (kv.Value, out k);
+				
+				if (hasKey && hasVal) {
+					
+					// set the key = value
+					d3[kv.Key] = kv.Value;
+					// give the key that formerly had that value, 
+					// the former value of the key that has been updated
+					d3[k] = v;
+					// i.e. swap
+					
+				} else if (hasKey) {
+					
+					d3[kv.Key] = kv.Value;
+					
+				} else if (hasVal) {
+					
+					d3[k] = '*';
+					d3.Add (kv.Key, kv.Value);
+					
+				} else {
+					
+					d3.Add (kv.Key, kv.Value);
+					
+				}						
+			}
+			
+			return d3;
 		}
 	}
 }
