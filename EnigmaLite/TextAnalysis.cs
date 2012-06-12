@@ -166,7 +166,7 @@ namespace EnigmaLite
 		/// <param name='miniCipher'>
 		/// Character substitions key.
 		/// </param>
-		public static int SubsRequired (this string targetStr, string origStr, out Dictionary<char,char> miniCipher)
+		public static int SubsRequired (string targetStr, string origStr, out Dictionary<char,char> miniCipher)
 		{
 			/// get letter histogram for each
 			/// if histogram does not have the same shape, fail
@@ -221,11 +221,11 @@ namespace EnigmaLite
 		/// <param name='origStr'>
 		/// Original string.
 		/// </param>
-		public static int SubsRequired (this string targetStr, string origStr)
+		public static int SubsRequired (string targetStr, string origStr)
 		{
 			Dictionary<char,char> waste;
-			return targetStr.SubsRequired (origStr, out waste);
-		}
+			return SubsRequired (targetStr, origStr, out waste);
+		}				
 	
 //		/// <summary>
 //		/// Finds the best match (not inc. already-perfect matches) and subs letters as necessary
@@ -250,23 +250,61 @@ namespace EnigmaLite
 			Func<int,string,double> matchScore = (x, y) => {
 				if (x < 0) {
 					return 0.0;
-				} else if (x == 1) {
+				} else if (x == 0) {
 					return 1.0;
 				} else {
-					return x / (double)y.Length;
+					return 1.0 - x / (double)y.Length;
 				}				
 			};
 			
 			var origWords = oneStep.SplitByWords ();
-			
-			// for f in freqs:
-				// for o in origWords:
-					// get matchScores
-				// if highest matchScore is 0.5 <= mS < 1.0
-				// break and use that miniCipher
-			
 			miniCipher = new Dictionary<char, char> ();
-			return "numpty";
+			
+			Dictionary<char,char> tempDict;
+			var highestMatchScore = 0.0;				
+			
+			foreach (var f in freqs.OrderedSingles) {
+				
+				foreach (var o in origWords) {
+					
+					var x = matchScore (SubsRequired (f.Key, o, out tempDict), o);
+					
+					if (x > highestMatchScore && x != 1.0) {
+						highestMatchScore = x;
+						miniCipher = tempDict;
+					}
+				}
+				// if highest matchScore is 0.5 <= mS < 1.0				
+				// break and use that miniCipher
+				if (highestMatchScore > 0.5 && highestMatchScore < 1.0) {
+					break;
+				}
+			}								
+			
+			foreach (var i in miniCipher) {
+				Console.Write ("--> ");
+				Console.WriteLine (i);
+			}
+			// returns the string after subbing those words
+			return "";
+		}
+		
+		public static Dictionary<char,char> ClosestMatch (IEnumerable<string> words, string word)
+		{
+			double hiScore = 0;
+			Dictionary<char,char> miniCipher = new Dictionary<char, char> ();
+			Dictionary<char,char> tempCipher;
+			foreach (var w in words) {				
+				var score = SubsRequired (w, word, out tempCipher);				
+				if (score > 0) {
+					var frac = 1.0 - score / (double)word.Length;
+					if (frac > hiScore) {
+						hiScore = frac;
+						miniCipher = tempCipher;
+					}
+				}
+			}
+			return miniCipher;
 		}
 	}
 }

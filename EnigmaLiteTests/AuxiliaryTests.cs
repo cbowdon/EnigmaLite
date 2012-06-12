@@ -291,11 +291,30 @@ namespace EnigmaLiteTests
 				new Frequencies<string> (realWordFreqs),
 				out miniCipher);
 						
-			Assert.AreEqual ("aehhon nx mrne is Uin!", ans);			
+			Assert.AreEqual (1, miniCipher.Count);			
 			Assert.AreEqual ('i', miniCipher ['q']);
-			Assert.AreEqual (1, miniCipher.Count);
+			Assert.AreEqual ("aehhon nx mrne is Uin!", ans);									
 		}
 		
+		[Test()]
+		public void SolveByMatching2 ()
+		{
+			var text = "aehhon nx mrne is Uin!";
+			Dictionary<char,char> miniCipher;
+			var ans = TextAnalysis.SolveByMatching (
+				text,
+				new Frequencies<string> (realWordFreqs),
+				out miniCipher);
+						
+			Assert.AreEqual (0, miniCipher.Count);			
+			
+			foreach (var i in miniCipher) {
+				Console.Write ("--> ");
+				Console.WriteLine (i);
+			}
+//			Assert.AreEqual ('i', miniCipher ['q']);
+//			Assert.AreEqual ("aehhon nx mrne is Uin!", ans);									
+		}
 		
 		
 		/// <summary>
@@ -320,21 +339,64 @@ namespace EnigmaLiteTests
 			// infinite steps
 			var dirty6 = "taxis";
 			
-			Assert.AreEqual (0, clean.SubsRequired (clean));
-			Assert.AreEqual (1, dirty1.SubsRequired (clean));
-			Assert.AreEqual (2, dirty2.SubsRequired (clean));
-			Assert.AreEqual (3, dirty3.SubsRequired (clean));
-			Assert.AreEqual (4, dirty4.SubsRequired (clean));
-			Assert.AreEqual (-1, dirty5.SubsRequired (clean), "double letter mismatch");			
-			Assert.AreEqual (-1, dirty6.SubsRequired (clean), "length mismatch");			
+			Assert.AreEqual (0, TextAnalysis.SubsRequired (clean, clean));
+			Assert.AreEqual (1, TextAnalysis.SubsRequired (dirty1, clean));
+			Assert.AreEqual (2, TextAnalysis.SubsRequired (dirty2, clean));
+			Assert.AreEqual (3, TextAnalysis.SubsRequired (dirty3, clean));
+			Assert.AreEqual (4, TextAnalysis.SubsRequired (dirty4, clean));
+			Assert.AreEqual (
+				-1,
+				TextAnalysis.SubsRequired (dirty5, clean),
+				"double letter mismatch"
+			);			
+			Assert.AreEqual (
+				-1,
+				TextAnalysis.SubsRequired (dirty6, clean),
+				"length mismatch"
+			);			
 			
 			Dictionary<char,char> miniCipher;
 			Assert.AreEqual (
 				1,
-				"oexo".SubsRequired ("text", out miniCipher),
+				TextAnalysis.SubsRequired ("oexo", "text", out miniCipher),
 				"double letter"
 			);
 			Assert.AreEqual ('t', miniCipher ['o']);			
+		}
+		
+		[Test()]
+		public void ClosestMatch ()
+		{
+			var text = "herro j vqhkbfef yoks kbn sokky";
+//			var real = "hello i upgraded your ram sorry";
+			
+			var words = text.SplitByWords ();
+			
+			var miniCipher = TextAnalysis.ClosestMatch (words, "hello");
+			Assert.AreEqual (1, miniCipher.Count);
+			Assert.AreEqual ('l', miniCipher ['r']);
+			
+			miniCipher = TextAnalysis.ClosestMatch (words, "cat");
+			Assert.AreEqual (0, miniCipher.Count);
+			
+			miniCipher = TextAnalysis.ClosestMatch (words, "sorry");
+			Assert.AreEqual (1, miniCipher.Count);
+			Assert.AreEqual ('r', miniCipher ['k']);			
+		}
+		
+		[Test]
+		public void MergeDicts ()
+		{
+			var d1 = new Dictionary<char,char> ();
+			var d2 = new Dictionary<char,char> ();
+			
+			d1.Add ('a', 'n');
+			d1.Add ('b', 'o');
+			d1.Add ('c', 'p');
+				
+			d2.Add ('d', 'q');
+			d2.Add ('a', 'z');
+			
 		}
 	}
 }
