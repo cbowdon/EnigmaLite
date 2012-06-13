@@ -73,6 +73,15 @@ namespace EnigmaLiteTests
 			Assert.AreNotEqual (sol, solver.Solution, "different solution");			
 			Assert.AreEqual (2, eventFired);
 		}
+		
+		[Test]
+		public void MatchSolve ()
+		{
+			var crypted2 = crypted.Substring(0,500);
+			var clean2 = cleanText.Substring(0,500);
+			CipherSolver solver = new CipherSolver (crypted2);			
+			Assert.AreEqual(clean2, solver.Solution);						
+		}
 	}
 }
 

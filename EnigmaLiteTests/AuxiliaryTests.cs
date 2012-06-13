@@ -281,40 +281,40 @@ namespace EnigmaLiteTests
 //		/// If multiple matches with equal closeness, the first.
 //		/// If no match >50%, closest match to second most frequent word (and so on).
 //		/// </summary>
-		[Test()]
-		public void SolveByMatching ()
-		{
-			var text = "aehhon nx mrne qs Uqn!";
-			Dictionary<char,char> miniCipher;
-			var ans = TextAnalysis.SolveByMatching (
-				text,
-				new Frequencies<string> (realWordFreqs),
-				out miniCipher);
-						
-			Assert.AreEqual (1, miniCipher.Count);			
-			Assert.AreEqual ('i', miniCipher ['q']);
-			Assert.AreEqual ("aehhon nx mrne is Uin!", ans);									
-		}
-		
-		[Test()]
-		public void SolveByMatching2 ()
-		{
-			var text = "aehhon nx mrne is Uin!";
-			Dictionary<char,char> miniCipher;
-			var ans = TextAnalysis.SolveByMatching (
-				text,
-				new Frequencies<string> (realWordFreqs),
-				out miniCipher);
-						
-			Assert.AreEqual (0, miniCipher.Count);			
-			
-			foreach (var i in miniCipher) {
-				Console.Write ("--> ");
-				Console.WriteLine (i);
-			}
+//		[Test()]
+//		public void SolveByMatching ()
+//		{
+//			var text = "aehhon nx mrne qs Uqn!";
+//			Dictionary<char,char> miniCipher;
+//			var ans = TextAnalysis.SolveByMatching (
+//				text,
+//				new Frequencies<string> (realWordFreqs),
+//				out miniCipher);
+//						
+//			Assert.AreEqual (1, miniCipher.Count);			
 //			Assert.AreEqual ('i', miniCipher ['q']);
 //			Assert.AreEqual ("aehhon nx mrne is Uin!", ans);									
-		}
+//		}
+//		
+//		[Test()]
+//		public void SolveByMatching2 ()
+//		{
+//			var text = "aehhon nx mrne is Uin!";
+//			Dictionary<char,char> miniCipher;
+//			var ans = TextAnalysis.SolveByMatching (
+//				text,
+//				new Frequencies<string> (realWordFreqs),
+//				out miniCipher);
+//						
+//			Assert.AreEqual (0, miniCipher.Count);			
+//			
+//			foreach (var i in miniCipher) {
+//				Console.Write ("--> ");
+//				Console.WriteLine (i);
+//			}
+////			Assert.AreEqual ('i', miniCipher ['q']);
+////			Assert.AreEqual ("aehhon nx mrne is Uin!", ans);									
+//		}
 		
 		
 		/// <summary>
