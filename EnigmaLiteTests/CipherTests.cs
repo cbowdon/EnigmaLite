@@ -77,8 +77,8 @@ namespace EnigmaLiteTests
 		[Test]
 		public void MatchSolve ()
 		{
-			var crypted2 = crypted.Substring(0,500);
-			var clean2 = cleanText.Substring(0,500);
+			var crypted2 = crypted.Substring(0,100);
+			var clean2 = cleanText.Substring(0,100);
 			CipherSolver solver = new CipherSolver (crypted2);			
 			Assert.AreEqual(clean2, solver.Solution);						
 		}

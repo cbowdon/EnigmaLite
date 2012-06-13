@@ -35,7 +35,7 @@ namespace EnigmaLite
 					_realWordsFile = value;
 					DeserializeRealWords ();
 					SolutionScore = TextAnalysis.ScoreSubd (
-						Solution.SplitByWords(),
+						Solution.SplitByWords (),
 						realWordFreqs.Singles
 					);
 				}
@@ -100,7 +100,27 @@ namespace EnigmaLite
         #region Public methods
 		public void Solve (string problem)
 		{
+			// frequency solution
+//			Problem = problem;
+//			var chars = Problem.SplitByChars ();
+//			var freqs = chars.RankFrequency ();			
+//			Cipher = (CipherDictionary)TextAnalysis.SubsDict (
+//				freqs,
+//				realCharFreqs
+//			);
+//			SubAndScore ();
+//			Cipher.ItemChanged += delegate(object sender, EventArgs e) {
+//				SubAndScore ();
+//			};			         
+			
+			MatchSolve (problem);
+		}
+		
+		public void MatchSolve (string problem)
+		{
+			// set problem
 			Problem = problem;
+			// initial frequency analysis solution
 			var chars = Problem.SplitByChars ();
 			var freqs = chars.RankFrequency ();			
 			Cipher = (CipherDictionary)TextAnalysis.SubsDict (
@@ -108,9 +128,36 @@ namespace EnigmaLite
 				realCharFreqs
 			);
 			SubAndScore ();
+			
+			Console.WriteLine (Solution);
+			var words = Solution.SplitByWords ();
+			var modDict = TextAnalysis.ClosestMatch (
+				words,
+				realWordFreqs.OrderedSingles [0].Key
+			);
+			Console.WriteLine ("{0}<-----", realWordFreqs.OrderedSingles [0].Key);
+			
+			foreach (var kv in modDict) {
+				Console.WriteLine ("{0}\t{1}", kv, Cipher[kv.Key]);				
+			}			
+			
+			Cipher = (CipherDictionary)TextAnalysis.MergeDicts (Cipher, modDict);			
+			
+			foreach (var kv in modDict) {
+				Console.WriteLine ("{0}\t{1}", kv, Cipher[kv.Key]);				
+			}			
+			
+			// problem is that we are subbing from the original problem, not from solution iter 1			
+			// perhaps MergeDicts is not the whole answer
+			// first we need to convert modDict's keys to Cipher's keys
+			
+			SubAndScore ();
+			
+			Console.WriteLine (Solution);
+			
 			Cipher.ItemChanged += delegate(object sender, EventArgs e) {
 				SubAndScore ();
-			};			            
+			};
 		}
         #endregion
 
