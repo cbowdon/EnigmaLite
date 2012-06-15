@@ -397,14 +397,18 @@ namespace EnigmaLiteTests
 			d1.Add ('d', 'q');
 			
 			// straightforward reassign
-			d2.Add('n','v');
-			// reassign to existing: swap vals
+			d2.Add ('n', 'v');
+			// reassign to existing: swap vals ! DO NOT SWAP VALS
 			d2.Add ('o', 'p');
+			// the previous actions should not affect this action:
+			d2.Add ('p', 'q');
+			// 2 swaps == error
 			
-			d3.Add('a','v');
-			d3.Add('b','p');
-			d3.Add('c','o');
-			d3.Add('d','q');
+			d3.Add ('a', 'v');
+			d3.Add ('b', 'p');
+			d3.Add ('c', 'z');
+			d3.Add ('d', 'q');
+			
 			
 			var d4 = TextAnalysis.UpdateDict (d1, d2);
 			
@@ -412,11 +416,11 @@ namespace EnigmaLiteTests
 				Assert.AreEqual (
 					kv.Value,
 					d4 [kv.Key],
-					string.Format("{0}\td4[{1}] =\t{2}\n", kv, kv.Key, d4[kv.Key])
+					string.Format ("{0}\td4[{1}] =\t{2}\n", kv, kv.Key, d4 [kv.Key])
 				);
 			}
 			
-			Assert.AreEqual(d3.Count, d4.Count, "dict size");
+			Assert.AreEqual (d3.Count, d4.Count, "dict size");
 		}
 	}
 }
