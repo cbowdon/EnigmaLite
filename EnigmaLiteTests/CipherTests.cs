@@ -77,10 +77,11 @@ namespace EnigmaLiteTests
 		[Test]
 		public void MatchSolve ()
 		{
-			var crypted2 = crypted.Substring(0,100);
-			var clean2 = cleanText.Substring(0,100);
-			CipherSolver solver = new CipherSolver (crypted2);			
-			Assert.AreEqual(clean2, solver.Solution);						
+			var crypted2 = crypted.Substring (0, 77);
+			var clean2 = cleanText.Substring (0, 77);
+			CipherSolver solver = new CipherSolver (crypted2);								
+			
+			Assert.AreEqual (clean2, solver.Solution);						
 		}
 	}
 }

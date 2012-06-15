@@ -129,27 +129,35 @@ namespace EnigmaLite
 			);
 			SubAndScore ();
 			
+//			Console.WriteLine (Cipher.Count);
+//			Cipher.Keys.ToList ().ForEach (x => Console.WriteLine ("{0}\t{1}", (int)x, (int)Cipher [x]));
+			
 			Console.WriteLine (Solution);
-			var words = Solution.SplitByWords ();
-			var modDict = TextAnalysis.ClosestMatch (
-				words,
-				realWordFreqs.OrderedSingles [0].Key
-			);
-			Console.WriteLine ("{0}<-----", realWordFreqs.OrderedSingles [0].Key);
+
+			Func<int,int> matchSolve = x => {
+				// get closest match to a real word in the solution so far
+				var modDict = TextAnalysis.ClosestMatch (
+				Solution.SplitByWords (),
+				realWordFreqs.OrderedSingles [x].Key
+				);				
+				// update the cipher dictionary such that the closest match is becomes a real word
+				Cipher = (CipherDictionary)TextAnalysis.UpdateDict (Cipher, modDict);			
+				SubAndScore ();
+				Console.WriteLine (x);
+				Console.WriteLine (Solution);
+				return x;
+			};
 			
-			foreach (var kv in modDict) {
-				Console.WriteLine ("{0}\t{1}", kv, Cipher[kv.Key]);				
-			}			
-			
-			Cipher = (CipherDictionary)TextAnalysis.MergeDicts (Cipher, modDict);			
-			
-			foreach (var kv in modDict) {
-				Console.WriteLine ("{0}\t{1}", kv, Cipher[kv.Key]);				
-			}			
-			
-			// problem is that we are subbing from the original problem, not from solution iter 1			
-			// perhaps MergeDicts is not the whole answer
-			// first we need to convert modDict's keys to Cipher's keys
+//			Console.WriteLine ("{0}<-----", realWordFreqs.OrderedSingles [0].Key);
+//			
+//			foreach (var kv in modDict) {
+//				Console.WriteLine ("{0}\t{1}", kv, Cipher [kv.Key]);				
+//			}			
+//			
+
+			for (int i = 0; i < 10; i++) {
+				matchSolve (i);
+			}
 			
 			SubAndScore ();
 			

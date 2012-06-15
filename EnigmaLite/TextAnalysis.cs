@@ -225,70 +225,8 @@ namespace EnigmaLite
 		{
 			Dictionary<char,char> waste;
 			return SubsRequired (targetStr, origStr, out waste);
-		}				
-	
-//		/// <summary>
-//		/// Finds the best match (not inc. already-perfect matches) and subs letters as necessary
-//		/// </summary>
-//		/// <returns>
-//		/// The original text with the new substitions
-//		/// </returns>
-//		/// <param name='origStr'>
-//		/// Original string.
-//		/// </param>
-//		/// <param name='realWords'>
-//		/// Real words.
-//		/// </param> 
+		}
 
-//		public static string SolveByMatching (string oneStep, Frequencies<string> freqs, out Dictionary<char,char> miniCipher)
-//		{
-//			/// Finds the closest match to the most frequent word (not including perfect matches). 
-//			/// If multiple matches with equal closeness, the first.
-//			/// If no match >50%, closest match to second most frequent word (and so on).	
-//		
-//			// from SubsRequired to a 'closeness' score
-//			Func<int,string,double> matchScore = (x, y) => {
-//				if (x < 0) {
-//					return 0.0;
-//				} else if (x == 0) {
-//					return 1.0;
-//				} else {
-//					return 1.0 - x / (double)y.Length;
-//				}				
-//			};
-//			
-//			var origWords = oneStep.SplitByWords ();
-//			miniCipher = new Dictionary<char, char> ();
-//			
-//			Dictionary<char,char> tempDict;
-//			var highestMatchScore = 0.0;				
-//			
-//			foreach (var f in freqs.OrderedSingles) {
-//				
-//				foreach (var o in origWords) {
-//					
-//					var x = matchScore (SubsRequired (f.Key, o, out tempDict), o);
-//					
-//					if (x > highestMatchScore && x != 1.0) {
-//						highestMatchScore = x;
-//						miniCipher = tempDict;
-//					}
-//				}
-//				// if highest matchScore is 0.5 <= mS < 1.0				
-//				// break and use that miniCipher
-//				if (highestMatchScore > 0.5 && highestMatchScore < 1.0) {
-//					break;
-//				}
-//			}								
-//			
-//			foreach (var i in miniCipher) {
-//				Console.Write ("--> ");
-//				Console.WriteLine (i);
-//			}
-//			// returns the string after subbing those words
-//			return "";
-//		}
-		
 		public static Dictionary<char,char> ClosestMatch (IEnumerable<string> words, string word)
 		{
 			double hiScore = 0;
@@ -307,52 +245,54 @@ namespace EnigmaLite
 			return miniCipher;
 		}
 		
-		public static IDictionary<char,char> MergeDicts (IDictionary<char,char> d1, IDictionary<char,char> d2)
+		public static IDictionary<char,char> UpdateDict (IDictionary<char,char> d1, IDictionary<char,char> d2)
 		{
 			var d3 = d1;
 			
 			var reverseD1 = new Dictionary<char,char> ();
 			foreach (var kv in d1) {
+				Console.WriteLine (">-- {0}", kv);
 				reverseD1.Add (kv.Value, kv.Key);
-			}
+			}			
+			
+			// example
+			// d1 contains [U,u] and [i,t]
+			// d2 contains [u,t] - we want to make d3 contain [U,t] and [i,u]
+			// rd1 contains [u,U] and [t,i]
 			
 			foreach (var kv in d2) {
-								
-				// does d1 contain the key?
+				Console.WriteLine ("--> {0}", kv);
+				
+				// kv = [u,t]
+				
+				var k = reverseD1 [kv.Key]; // k = U
+				
+				d3 [k] = kv.Value;	// d3[U] = t														
+				
+				Console.WriteLine ("{0}\t{1}\t{2}", kv, k, d3 [k]);
+				
+				// rd1[t] = i
+				// d3[i] = u
 				char v;
-				var hasKey = d1.TryGetValue (kv.Key, out v);
+				var hasDuplicate = reverseD1.TryGetValue (kv.Value, out v);
+				Console.WriteLine ("{0}\t{1}", kv.Value, hasDuplicate);
+				if (hasDuplicate) {
+					d3 [v] = kv.Key;
+					Console.WriteLine ("{0}\t{1}", v, d3 [v]);
+				}
+				//////////////
 				
-				// does d1 contain the value?
-				char k;
-				var hasVal = reverseD1.TryGetValue (kv.Value, out k);
-				
-				if (hasKey && hasVal) {
-					
-					// set the key = value
-					d3[kv.Key] = kv.Value;
-					// give the key that formerly had that value, 
-					// the former value of the key that has been updated
-					d3[k] = v;
-					// i.e. swap
-					
-				} else if (hasKey) {
-					
-					d3[kv.Key] = kv.Value;
-					
-				} else if (hasVal) {
-					
-					d3[k] = '*';
-					d3.Add (kv.Key, kv.Value);
-					
-				} else {
-					
-					d3.Add (kv.Key, kv.Value);
-					
-				}						
+				foreach (var z in d3) {
+					Console.WriteLine ("|{0}|", z);
+				}
+				// the bug is: the swapping action above can block subsequent d2 additions
+
 			}
-			
+			foreach (var kv in d3) {
+				Console.WriteLine (kv);
+			}
 			return d3;
-		}
+		}				
 	}
 }
 
