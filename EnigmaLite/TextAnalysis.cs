@@ -260,6 +260,11 @@ namespace EnigmaLite
 			// d2 contains [u,t] - we want to make d3 contain [U,t] and [i,u]
 			// rd1 contains [u,U] and [t,i]
 			
+			// example
+			// d1 contains [i,t] and [e,h]
+			// d2 contains [t,h] - we want to make d3 contain [i,h] and [?,?]
+			// rd1 contains [t,i] and [h,e]
+			
 			foreach (var kv in d2) {
 				Console.WriteLine ("--> {0}", kv);
 				
@@ -271,16 +276,24 @@ namespace EnigmaLite
 				
 				Console.WriteLine ("{0}\t{1}\t{2}", kv, k, d3 [k]);
 				
-				// rd1[t] = i
-				// d3[i] = u
+				// rd1[t] = v = i
+				// d3[i] = u			
 				char v;
 				var hasDuplicate = reverseD1.TryGetValue (kv.Value, out v);
+
 				Console.WriteLine ("{0}\t{1}", kv.Value, hasDuplicate);
+				
 				if (hasDuplicate) {
 					d3 [v] = kv.Key;
 					Console.WriteLine ("{0}\t{1}", v, d3 [v]);
+					try {
+						var temp = d2 [v];
+						d2.Remove (v);
+						d2.Add (v, temp);
+					} catch {
+						
+					}					
 				}
-				//////////////
 				
 				foreach (var z in d3) {
 					Console.WriteLine ("|{0}|", z);

@@ -398,7 +398,7 @@ namespace EnigmaLiteTests
 			
 			// straightforward reassign
 			d2.Add ('n', 'v');
-			// reassign to existing: swap vals ! DO NOT SWAP VALS
+			// reassign to existing: swap vals
 			d2.Add ('o', 'p');
 			// the previous actions should not affect this action:
 			d2.Add ('p', 'q');
@@ -406,10 +406,9 @@ namespace EnigmaLiteTests
 			
 			d3.Add ('a', 'v');
 			d3.Add ('b', 'p');
-			d3.Add ('c', 'z');
-			d3.Add ('d', 'q');
-			
-			
+			d3.Add ('c', 'q');
+			d3.Add ('d', 'o');
+						
 			var d4 = TextAnalysis.UpdateDict (d1, d2);
 			
 			foreach (var kv in d3) {
