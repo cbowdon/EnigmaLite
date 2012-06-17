@@ -141,7 +141,7 @@ namespace EnigmaLite
 				realWordFreqs.OrderedSingles [x].Key
 				);				
 				// update the cipher dictionary such that the closest match is becomes a real word
-				Cipher = (CipherDictionary)TextAnalysis.UpdateDict (Cipher, modDict);			
+				Cipher = (CipherDictionary)TextAnalysis.MergeDict (Cipher, modDict);			
 				SubAndScore ();
 				Console.WriteLine (x);
 				Console.WriteLine (Solution);

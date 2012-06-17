@@ -245,67 +245,146 @@ namespace EnigmaLite
 			return miniCipher;
 		}
 		
-		public static IDictionary<char,char> UpdateDict (IDictionary<char,char> d1, IDictionary<char,char> d2)
+//		public static IDictionary<char,char> MergeDict (IDictionary<char,char> d1, IDictionary<char,char> d2)
+//		{
+//			var d3 = d1;
+//			
+//			var inverseD1 = new Dictionary<char,char> ();
+//			foreach (var kv in d1) {
+//				Console.WriteLine ("> {0}", kv);
+//				inverseD1.Add (kv.Value, kv.Key);
+//			}	
+//			
+//			var inverseD2 = new Dictionary<char,char> ();
+//			foreach (var kv in d2) {
+//				inverseD2.Add (kv.Value, kv.Key);
+//			}
+//			
+//			// example pt1
+//			// d1 contains [U,u] and [i,t]
+//			// d2 contains [u,t] - we want to make d3 contain [U,t] and [i,u]
+//			// rd1 contains [u,U] and [t,i]
+//			//
+//			// example pt2
+//			// d1 contains [i,t] and [e,h]
+//			// d2 contains [t,h] - we want to make d3 contain [i,h] and [?,?]
+//			// rd1 contains [t,i] and [h,e]
+//			//
+//			foreach (var kv in d2) {
+//				Console.WriteLine ("--> {0}", kv);
+//				
+//				// kv = [u,t]
+//				
+//				var k = inverseD1 [kv.Key]; // k = U
+//				
+//				d3 [k] = kv.Value;	// d3[U] = t														
+//				
+//				Console.WriteLine ("{0}\tto become\t[{1}, {2}]", kv, k, d3 [k]);
+//				
+//				// rd1[t] = v = i
+//				// d3[i] = u			
+//				char v1, v2;
+//				var hasD1Duplicate = inverseD1.TryGetValue (kv.Value, out v1);				
+//				var hasD2KeyDuplicate = d2.TryGetValue (kv.Value, out v2);
+//
+//				Console.WriteLine ("{0}\thasD1Duplicate\t{1}", kv.Value, hasD1Duplicate);
+//				
+//				
+//				if (hasD2KeyDuplicate) {
+//					d2.Remove(kv.Value);
+//					//d2.Add (?,v2);
+//					// exception: modified the collection we iterate through
+//				}
+//				
+//				if (hasD1Duplicate) {
+//					Console.WriteLine (
+//						"In d3:\t[{0},{1}]\tto become\t[{2},{3}]",
+//						v1,
+//						d3 [v1],
+//						v1,
+//						kv.Key
+//					);
+//					d3 [v1] = kv.Key;					
+//					try {
+//						var temp = d2 [v1];
+//						d2.Remove (v1);
+//						d2.Add (v1, temp);
+//					} catch {
+//						
+//					}					
+//				}				
+//
+//				
+//				foreach (var z in d3) {
+//					Console.WriteLine ("|{0}|", z);
+//				}
+//				// the bug is: the swapping action above can block subsequent d2 additions
+//
+//			}
+//			foreach (var kv in d3) {
+//				Console.WriteLine (kv);
+//			}
+//			return d3;
+//		}				
+	
+		public static IDictionary<char,char> MergeDict (IDictionary<char,char> dOriginal, IDictionary<char,char> dChanges)
 		{
-			var d3 = d1;
+			var dNew = dOriginal;
 			
-			var reverseD1 = new Dictionary<char,char> ();
-			foreach (var kv in d1) {
-				Console.WriteLine (">-- {0}", kv);
-				reverseD1.Add (kv.Value, kv.Key);
-			}			
+			var invOrig = InverseDictionary (dOriginal);
+			var invChng = InverseDictionary (dChanges);
 			
-			// example
-			// d1 contains [U,u] and [i,t]
-			// d2 contains [u,t] - we want to make d3 contain [U,t] and [i,u]
-			// rd1 contains [u,U] and [t,i]
-			
-			// example
-			// d1 contains [i,t] and [e,h]
-			// d2 contains [t,h] - we want to make d3 contain [i,h] and [?,?]
-			// rd1 contains [t,i] and [h,e]
-			
-			foreach (var kv in d2) {
-				Console.WriteLine ("--> {0}", kv);
-				
-				// kv = [u,t]
-				
-				var k = reverseD1 [kv.Key]; // k = U
-				
-				d3 [k] = kv.Value;	// d3[U] = t														
-				
-				Console.WriteLine ("{0}\t{1}\t{2}", kv, k, d3 [k]);
-				
-				// rd1[t] = v = i
-				// d3[i] = u			
-				char v;
-				var hasDuplicate = reverseD1.TryGetValue (kv.Value, out v);
-
-				Console.WriteLine ("{0}\t{1}", kv.Value, hasDuplicate);
-				
-				if (hasDuplicate) {
-					d3 [v] = kv.Key;
-					Console.WriteLine ("{0}\t{1}", v, d3 [v]);
-					try {
-						var temp = d2 [v];
-						d2.Remove (v);
-						d2.Add (v, temp);
-					} catch {
-						
-					}					
+			foreach (var kv in dChanges) {
+				// get and set Key in dOriginal that has Value = kv.Key
+				var origKey = invOrig [kv.Key];
+				dNew [origKey] = kv.Value;
+				// if dNew already has a Key with Value = kv.Value
+				// i.e. we now have a duplicate Value in dNew
+				// find that Key:
+				char dupKey;
+				if (invOrig.TryGetValue (kv.Value, out dupKey)) {
+					// and set its Value to...
+					// a Value that is not in dOriginal or dChanges
+					dNew [dupKey] = GetFreshKey (invOrig, invChng);
 				}
-				
-				foreach (var z in d3) {
-					Console.WriteLine ("|{0}|", z);
-				}
-				// the bug is: the swapping action above can block subsequent d2 additions
-
+			}				
+			
+			return dNew;
+		}
+		
+		public static Dictionary<TValue,TKey> InverseDictionary<TValue,TKey> (IDictionary<TKey, TValue> original)
+		{			
+			var inv = new Dictionary<TValue,TKey> ();
+			foreach (var kv in original) {
+				inv.Add (kv.Value, kv.Key);
+			}		
+			return inv;
+		}
+		
+		/// <summary>
+		/// Gets a key not contained in either d1 or d2
+		/// </summary>
+		/// <returns>
+		/// The fresh key.
+		/// </returns>
+		/// <param name='d1'>
+		/// D1.
+		/// </param>
+		/// <param name='d2'>
+		/// D2.
+		/// </param>
+		private static char GetFreshKey (IDictionary<char,char> d1, IDictionary<char,char> d2)
+		{
+			char newKey;
+			var rand = new Random ();
+			while (true) {
+				newKey = (char)rand.Next (32, 128);
+				if (!(d1.ContainsKey (newKey) && d2.ContainsKey (newKey))) {				
+					break;									
+				}				
 			}
-			foreach (var kv in d3) {
-				Console.WriteLine (kv);
-			}
-			return d3;
-		}				
+			return newKey;
+		}
 	}
 }
 

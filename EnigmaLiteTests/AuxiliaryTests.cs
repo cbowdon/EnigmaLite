@@ -409,9 +409,10 @@ namespace EnigmaLiteTests
 			d3.Add ('c', 'q');
 			d3.Add ('d', 'o');
 						
-			var d4 = TextAnalysis.UpdateDict (d1, d2);
+			var d4 = TextAnalysis.MergeDict (d1, d2);
 			
 			foreach (var kv in d3) {
+				Console.WriteLine ("{0}\td4[{1}] =\t{2}\n", kv, kv.Key, d4 [kv.Key]);
 				Assert.AreEqual (
 					kv.Value,
 					d4 [kv.Key],
